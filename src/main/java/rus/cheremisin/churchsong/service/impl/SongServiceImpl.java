@@ -41,11 +41,12 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public SongDTO editSong(Long id, SongDTO dto) {
-        Song song = dao.findById(id)
+        final Song song = dao.findById(id)
                 .orElseThrow(
                         () -> new EntityNotFoundException("song с данным id не найден!")
                 );
-        return mapper.mergeToEntity(dto, song);
+        final Song updatedSong = mapper.mergeToEntity(dto, song);
+        return mapper.toDto(updatedSong);
     }
 
     @Override

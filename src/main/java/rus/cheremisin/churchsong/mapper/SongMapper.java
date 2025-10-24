@@ -2,6 +2,7 @@ package rus.cheremisin.churchsong.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import rus.cheremisin.churchsong.DTO.SongDTO;
 import rus.cheremisin.churchsong.entity.Song;
 
@@ -17,6 +18,6 @@ public interface SongMapper {
 
     List<SongDTO> toDtoList(List<Song> songs);
 
-    SongDTO mergeToEntity(SongDTO dto, Song song);
+    Song mergeToEntity(SongDTO dto, @MappingTarget Song song);
 
 }
