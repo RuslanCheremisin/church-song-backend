@@ -1,4 +1,4 @@
-package rus.cheremisin.churchsong.model;
+package rus.cheremisin.churchsong.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,5 @@
-package rus.cheremisin.churchsong.model;
+package rus.cheremisin.churchsong.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

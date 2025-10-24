@@ -1,9 +1,9 @@
-package rus.cheremisin.churchsong.model;
+package rus.cheremisin.churchsong.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import rus.cheremisin.churchsong.model.songparts.SongPart;
+import rus.cheremisin.churchsong.entity.songparts.SongPart;
 
 import java.util.List;
 

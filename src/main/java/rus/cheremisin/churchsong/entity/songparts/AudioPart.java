@@ -1,11 +1,11 @@
-package rus.cheremisin.churchsong.model.songparts;
+package rus.cheremisin.churchsong.entity.songparts;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "video_parts")
+@Table(name = "audio_parts")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -13,11 +13,10 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class VideoPart {
+public class AudioPart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-//    Byte[] videoData;
     String link;
 
 }

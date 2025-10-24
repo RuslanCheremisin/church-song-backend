@@ -1,10 +1,10 @@
-package rus.cheremisin.churchsong.model;
+package rus.cheremisin.churchsong.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import rus.cheremisin.churchsong.model.songparts.AudioPart;
-import rus.cheremisin.churchsong.model.songparts.VideoPart;
+import rus.cheremisin.churchsong.entity.songparts.AudioPart;
+import rus.cheremisin.churchsong.entity.songparts.VideoPart;
 
 @Entity
 @Table(name = "orig_recordings")

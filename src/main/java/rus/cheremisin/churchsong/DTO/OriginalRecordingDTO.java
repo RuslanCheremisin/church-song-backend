@@ -2,8 +2,8 @@ package rus.cheremisin.churchsong.DTO;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import rus.cheremisin.churchsong.model.songparts.AudioPart;
-import rus.cheremisin.churchsong.model.songparts.VideoPart;
+import rus.cheremisin.churchsong.entity.songparts.AudioPart;
+import rus.cheremisin.churchsong.entity.songparts.VideoPart;
 
 @AllArgsConstructor
 @NoArgsConstructor

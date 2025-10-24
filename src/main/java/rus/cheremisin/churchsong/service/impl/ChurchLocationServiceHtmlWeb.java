@@ -9,9 +9,9 @@ import rus.cheremisin.churchsong.DTO.church.ChurchLocationDTO;
 import rus.cheremisin.churchsong.DTO.HtmlWeb.HtmlWebLocationDTO;
 import rus.cheremisin.churchsong.DTO.HtmlWeb.HtmlWebResponse;
 import rus.cheremisin.churchsong.service.ChurchLocationService;
-import rus.cheremisin.churchsong.model.church.ChurchLocation;
-import rus.cheremisin.churchsong.Util.Utils;
-import rus.cheremisin.churchsong.Util.impl.HtmlWebDTOMapper;
+import rus.cheremisin.churchsong.entity.church.ChurchLocation;
+import rus.cheremisin.churchsong.util.Utils;
+import rus.cheremisin.churchsong.util.impl.HtmlWebDTOMapper;
 
 import java.util.ArrayList;
 import java.util.List;

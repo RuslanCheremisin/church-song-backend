@@ -1,4 +1,4 @@
-package rus.cheremisin.churchsong.Util;
+package rus.cheremisin.churchsong.util;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;

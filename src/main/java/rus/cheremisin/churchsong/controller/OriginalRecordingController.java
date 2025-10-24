@@ -6,8 +6,8 @@ import rus.cheremisin.churchsong.DTO.OriginalRecordingDTO;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(" /{song-id}/original-recording")
+//@RestController
+//@RequestMapping(" /{song-id}/original-recording")
 public class OriginalRecordingController {
 
     @GetMapping

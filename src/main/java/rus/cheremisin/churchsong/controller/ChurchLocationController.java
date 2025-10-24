@@ -9,7 +9,7 @@ import rus.cheremisin.churchsong.service.ChurchLocationService;
 
 import java.util.List;
 
-@RestController
+//@RestController
 public class ChurchLocationController {
     private ChurchLocationService churchLocationService;
 

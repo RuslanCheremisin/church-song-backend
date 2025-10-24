@@ -2,9 +2,9 @@ package rus.cheremisin.churchsong.DTO;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import rus.cheremisin.churchsong.model.AvatarImage;
-import rus.cheremisin.churchsong.model.Song;
-import rus.cheremisin.churchsong.model.User;
+import rus.cheremisin.churchsong.entity.AvatarImage;
+import rus.cheremisin.churchsong.entity.Song;
+import rus.cheremisin.churchsong.entity.User;
 
 import java.util.List;
 

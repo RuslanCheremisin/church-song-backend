@@ -1,11 +1,10 @@
 package rus.cheremisin.churchsong.DTO;
 
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import rus.cheremisin.churchsong.model.AvatarImage;
-import rus.cheremisin.churchsong.model.Band;
-import rus.cheremisin.churchsong.model.Song;
+import rus.cheremisin.churchsong.entity.AvatarImage;
+import rus.cheremisin.churchsong.entity.Band;
+import rus.cheremisin.churchsong.entity.Song;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDto {
+public class UserDTO {
     private Long id;
     private String firstName;
     private String lastName;

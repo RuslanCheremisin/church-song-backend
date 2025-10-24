@@ -1,8 +1,8 @@
-package rus.cheremisin.churchsong.Util.impl;
+package rus.cheremisin.churchsong.util.impl;
 
 import rus.cheremisin.churchsong.DTO.church.ChurchLocationDTO;
 import rus.cheremisin.churchsong.DTO.HtmlWeb.HtmlWebLocationDTO;
-import rus.cheremisin.churchsong.model.church.ChurchLocation;
+import rus.cheremisin.churchsong.entity.church.ChurchLocation;
 
 
 public class HtmlWebDTOMapper  {

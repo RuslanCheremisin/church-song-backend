@@ -7,31 +7,31 @@ import rus.cheremisin.churchsong.DTO.songparts.SongPartDTO;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/parts")
-public class PartController {
+@RequestMapping("/parts")
+public class SongPartController {
     
     @GetMapping
-    public ResponseEntity<List<SongPartDTO>> getParts() {
+    public ResponseEntity<List<SongPartDTO>> getSongParts() {
         return ResponseEntity.ok().build();
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<SongPartDTO> getPartById(@PathVariable Long id) {
+    public ResponseEntity<SongPartDTO> getSongPartById(@PathVariable Long id) {
         return ResponseEntity.ok().build();
     }
     
     @PostMapping
-    public ResponseEntity<SongPartDTO> createPart(SongPartDTO song) {
+    public ResponseEntity<SongPartDTO> createSongPart(SongPartDTO song) {
         return ResponseEntity.ok().build();
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<SongPartDTO> editPart(@PathVariable Long id) {
+    public ResponseEntity<SongPartDTO> editSongPart(@PathVariable Long id) {
         return ResponseEntity.ok().build();
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<SongPartDTO> deletePart(@PathVariable Long id) {
+    public ResponseEntity<SongPartDTO> deleteSongPart(@PathVariable Long id) {
         return ResponseEntity.ok().build();
     }
 }

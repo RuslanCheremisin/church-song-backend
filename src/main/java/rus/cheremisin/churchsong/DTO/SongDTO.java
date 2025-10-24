@@ -2,8 +2,8 @@ package rus.cheremisin.churchsong.DTO;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import rus.cheremisin.churchsong.model.OriginalRecording;
-import rus.cheremisin.churchsong.model.songparts.SongPart;
+import rus.cheremisin.churchsong.entity.OriginalRecording;
+import rus.cheremisin.churchsong.entity.songparts.SongPart;
 
 import java.util.List;
 

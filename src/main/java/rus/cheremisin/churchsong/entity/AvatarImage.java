@@ -1,11 +1,11 @@
-package rus.cheremisin.churchsong.model.songparts;
+package rus.cheremisin.churchsong.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "audio_parts")
+@Table(name = "avatar_images")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -13,10 +13,9 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AudioPart {
+public class AvatarImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String link;
-
 }

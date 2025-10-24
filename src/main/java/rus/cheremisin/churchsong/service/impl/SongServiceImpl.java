@@ -1,0 +1,59 @@
+package rus.cheremisin.churchsong.service.impl;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Service;
+import rus.cheremisin.churchsong.DAO.SongDAO;
+import rus.cheremisin.churchsong.DTO.SongDTO;
+import rus.cheremisin.churchsong.mapper.SongMapper;
+import rus.cheremisin.churchsong.entity.Song;
+import rus.cheremisin.churchsong.service.SongService;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class SongServiceImpl implements SongService {
+
+    SongDAO dao;
+    SongMapper mapper;
+    @Override
+    public SongDTO getSongById(Long id) {
+        final Song song = dao.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("song с данным id не найден!")
+        );
+        return mapper.toDto(song);
+    }
+
+    @Override
+    public List<SongDTO> getAllSongs() {
+        return mapper.toDtoList(dao.findAll());
+    }
+
+    @Override
+    public SongDTO createSong(SongDTO dto) {
+        Song song = dao.save(mapper.toEntity(dto));
+        return mapper.toDto(song);
+    }
+
+    @Override
+    public SongDTO editSong(Long id, SongDTO dto) {
+        Song song = dao.findById(id)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("song с данным id не найден!")
+                );
+        return mapper.mergeToEntity(dto, song);
+    }
+
+    @Override
+    public void deleteSong(Long id) {
+        Song song = dao.findById(id)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("song с данным id не найден!")
+                );
+        dao.delete(song);
+    }
+}

@@ -2,9 +2,8 @@ package rus.cheremisin.churchsong.DAO;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import rus.cheremisin.churchsong.entity.church.ChurchLocation;
+import rus.cheremisin.churchsong.entity.User;
 
 @Repository
-public interface ChurchLocationDAO extends JpaRepository<ChurchLocation, Long> {
-
+public interface UserDAO extends JpaRepository<User, Long> {
 }
