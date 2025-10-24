@@ -1,0 +1,22 @@
+package rus.cheremisin.churchsong.model.songparts;
+
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Entity
+@Table(name = "audio_parts")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class AudioPart {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    String link;
+
+}

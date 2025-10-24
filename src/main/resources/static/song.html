@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worship Team - Название Песни</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+<body>
+<div class="app-container">
+    <!-- Сайдбар -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Worship Team</h2>
+            <div class="group-info">
+                <span>Группа: </span>
+                <strong>Название Группы</strong>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <h3>Библиотека</h3>
+                <ul class="nav-list">
+                    <li class="nav-item folder-item active">
+                        <div class="folder-header" onclick="toggleFolder(this)">
+                            <span class="folder-icon">📁</span>
+                            <span class="folder-name">Альбом 1</span>
+                            <span class="folder-toggle">▼</span>
+                        </div>
+                        <ul class="sub-list">
+                            <li class="nav-item active">
+                                <span class="song-icon">🎵</span>
+                                <span class="song-name">Текущая Песня</span>
+                            </li>
+                            <li class="nav-item">
+                                <span class="song-icon">🎵</span>
+                                <span class="song-name">Другая Песня</span>
+                            </li>
+                            <li class="nav-item">
+                                <span class="song-icon">🎵</span>
+                                <span class="song-name">Великая Песнь</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item folder-item">
+                        <div class="folder-header" onclick="toggleFolder(this)">
+                            <span class="folder-icon">📁</span>
+                            <span class="folder-name">Альбом 2</span>
+                            <span class="folder-toggle">▼</span>
+                        </div>
+                        <ul class="sub-list">
+                            <li class="nav-item">
+                                <span class="song-icon">🎵</span>
+                                <span class="song-name">Утренняя Хвала</span>
+                            </li>
+                            <li class="nav-item">
+                                <span class="song-icon">🎵</span>
+                                <span class="song-name">Вечерняя Молитва</span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3>Участники</h3>
+                <div class="members-list">
+                    <div class="member">👤 Вокалист</div>
+                    <div class="member">🎸 Гитарист</div>
+                    <div class="member">🎹 Клавишник</div>
+                    <div class="member">🥁 Барабанщик</div>
+                    <div class="member">🎵 Басист</div>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <header class="song-header">
+            <div class="song-info">
+                <h1>Название Песни</h1>
+                <div class="song-meta">
+                    <span class="badge bg-secondary">Тональность: C</span>
+                    <span class="badge bg-secondary">Темп: 120 BPM</span>
+                    <span class="badge bg-secondary">Размер: 4/4</span>
+                </div>
+            </div>
+            <div class="song-actions">
+                <button class="btn btn-primary" onclick="addPart()">+ Добавить партию</button>
+                <button class="btn btn-outline-secondary" onclick="editSong()">✏️ Редактировать песню</button>
+            </div>
+        </header>
+
+        <!-- Оригинальная запись -->
+        <div class="original-recording card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Оригинальная запись</h3>
+                <div>
+                    <button class="btn btn-sm btn-outline-primary" onclick="editOriginal()">✏️</button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteOriginal()">🗑️</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="original-content">
+                    <!-- Видео контейнер -->
+                    <div class="media-section mb-4">
+                        <h5 class="media-title">🎥 Видео запись</h5>
+                        <div class="youtube-player" id="youtube-player"></div>
+                    </div>
+
+                    <!-- Аудио контейнер -->
+                    <div class="media-section">
+                        <h5 class="media-title">🎵 Аудио запись</h5>
+                        <div class="audio-player">
+                            <audio controls class="audio-element w-100">
+                                <source src="#" type="audio/mpeg">
+                                Ваш браузер не поддерживает аудио элементы.
+                            </audio>
+                            <div class="audio-info d-flex justify-content-between mt-2">
+                                <span>original-song.mp3</span>
+                                <span>5.2 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Список партий -->
+        <section class="parts-section">
+            <h2>Партии инструментов</h2>
+
+            <!-- Партия 1: Текстовая (аккорды) -->
+            <div class="part-card card mb-3" data-part-id="1">
+                <div class="card-header part-header">
+                    <div class="part-title" onclick="togglePart(this)">
+                        <span class="icon">🎸</span>
+                        <h3 class="d-inline">Акустическая гитара - Основные аккорды</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="part-actions">
+                        <button class="btn btn-sm btn-outline-primary" onclick="editPart(1)">✏️</button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deletePart(1)">🗑️</button>
+                    </div>
+                </div>
+                <div class="part-content">
+                    <div class="card-body">
+                        <div class="chords-text">
+                                <pre>[C]Тихая молитва, [G]в сердце покой
+[Am]Иисус, Ты со [F]мной, Иисус, Ты со [G]мной
+
+[C]В бурях и штормах, [G]в радости, в слезах
+[Am]Ты никогда не [F]оставляешь [G]меня одного</pre>
+                        </div>
+                        <div class="part-actions mt-3">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="addComment(this)">💬 Комментарии (2)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Партия 2: YouTube видео -->
+            <div class="part-card card mb-3" data-part-id="2">
+                <div class="card-header part-header">
+                    <div class="part-title" onclick="togglePart(this)">
+                        <span class="icon">🎥</span>
+                        <h3 class="d-inline">Электрогитара - Видео разбор</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="part-actions">
+                        <button class="btn btn-sm btn-outline-primary" onclick="editPart(2)">✏️</button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deletePart(2)">🗑️</button>
+                    </div>
+                </div>
+                <div class="part-content">
+                    <div class="card-body">
+                        <div class="video-wrapper">
+                            <div id="tutorial-video" class="video-container"></div>
+                        </div>
+                        <div class="part-actions mt-3">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="addComment(this)">💬 Комментарии (1)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Партия 3: Аудио -->
+            <div class="part-card card mb-3" data-part-id="3">
+                <div class="card-header part-header">
+                    <div class="part-title" onclick="togglePart(this)">
+                        <span class="icon">🎵</span>
+                        <h3 class="d-inline">Бас - Аудио пример</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="part-actions">
+                        <button class="btn btn-sm btn-outline-primary" onclick="editPart(3)">✏️</button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deletePart(3)">🗑️</button>
+                    </div>
+                </div>
+                <div class="part-content">
+                    <div class="card-body">
+                        <div class="audio-player">
+                            <audio controls class="audio-element w-100">
+                                <source src="#" type="audio/mpeg">
+                                Ваш браузер не поддерживает аудио элементы.
+                            </audio>
+                            <div class="audio-info d-flex justify-content-between mt-2">
+                                <span>bass-line.mp3</span>
+                                <span>2.4 MB</span>
+                            </div>
+                        </div>
+                        <div class="part-actions mt-3">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="addComment(this)">💬 Комментарии (0)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Модальное окно для добавления/редактирования партии -->
+<div class="modal fade" id="partModal" tabindex="-1" aria-labelledby="partModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="partModalTitle">Добавить новую партию</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="partForm">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="partInstrument" class="form-label">Инструмент:</label>
+                                <select class="form-select" id="partInstrument" required>
+                                    <option value="">Выберите инструмент</option>
+                                    <option value="vocal">Вокал</option>
+                                    <option value="guitar">Гитара</option>
+                                    <option value="bass">Бас</option>
+                                    <option value="drums">Ударные</option>
+                                    <option value="keys">Клавиши</option>
+                                    <option value="other">Другой</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="partRole" class="form-label">Роль/Описание:</label>
+                                <input type="text" class="form-control" id="partRole" placeholder="Например: Основные аккорды, Соло, Гармония" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Блок для текстового контента -->
+                    <div class="content-section mb-3">
+                        <h6>Текст/Аккорды</h6>
+                        <div class="mb-3">
+                            <textarea class="form-control" id="textContent" rows="6" placeholder="Введите текст песни с аккордами..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Блок для загрузки видео -->
+                    <div class="content-section mb-3">
+                        <h6>Видео</h6>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="videoFile" accept="video/*" onchange="handleVideoSelect(this)">
+                            <div class="form-text">Поддерживаемые форматы: MP4, AVI, MOV, WMV (макс. 128MB)</div>
+                        </div>
+                        <div id="videoUploadProgress" class="upload-progress" style="display: none;">
+                            <div class="progress">
+                                <div class="progress-bar progress-fill" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">Загрузка: 0%</span>
+                        </div>
+                        <div id="videoPreview" class="preview-container" style="display: none;"></div>
+                    </div>
+
+                    <!-- Блок для загрузки аудио -->
+                    <div class="content-section mb-3">
+                        <h6>Аудио</h6>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="audioFile" accept="audio/*" onchange="handleAudioSelect(this)">
+                            <div class="form-text">Поддерживаемые форматы: MP3, WAV, OGG (макс. 50MB)</div>
+                        </div>
+                        <div id="audioUploadProgress" class="upload-progress" style="display: none;">
+                            <div class="progress">
+                                <div class="progress-bar progress-fill" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">Загрузка: 0%</span>
+                        </div>
+                        <div id="audioPreview" class="preview-container" style="display: none;"></div>
+                    </div>
+
+                    <!-- Блок для загрузки изображений -->
+                    <div class="content-section mb-3">
+                        <h6>Изображения (ноты, схемы)</h6>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="imageFile" accept="image/*" multiple onchange="handleImageSelect(this)">
+                            <div class="form-text">Поддерживаемые форматы: JPG, PNG, PDF (макс. 10MB каждый)</div>
+                        </div>
+                        <div id="imageUploadProgress" class="upload-progress" style="display: none;">
+                            <div class="progress">
+                                <div class="progress-bar progress-fill" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">Загрузка: 0%</span>
+                        </div>
+                        <div id="imagePreview" class="preview-container" style="display: none;"></div>
+                    </div>
+
+                    <!-- Валидация -->
+                    <div id="validationError" class="alert alert-danger" style="display: none;">
+                        ❌ Пожалуйста, заполните хотя бы одно поле (текст, видео, аудио или изображение)
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary" id="partSubmitBtn">Создать партию</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для редактирования песни -->
+<div class="modal fade" id="songModal" tabindex="-1" aria-labelledby="songModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="songModalLabel">Редактировать песню</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="songForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="songTitle" class="form-label">Название песни:</label>
+                        <input type="text" class="form-control" id="songTitle" value="Название Песни" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="songKey" class="form-label">Тональность:</label>
+                                <input type="text" class="form-control" id="songKey" value="C" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="songBPM" class="form-label">Темп (BPM):</label>
+                                <input type="number" class="form-control" id="songBPM" value="120" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="songTimeSignature" class="form-label">Размер:</label>
+                                <input type="text" class="form-control" id="songTimeSignature" value="4/4" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для редактирования оригинальной записи -->
+<div class="modal fade" id="originalModal" tabindex="-1" aria-labelledby="originalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="originalModalLabel">Редактировать оригинальную запись</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="originalForm">
+                <div class="modal-body">
+                    <!-- Секция YouTube видео -->
+                    <div class="content-section mb-4">
+                        <h6>🎥 YouTube видео</h6>
+                        <div class="mb-3">
+                            <label for="youtubeUrl" class="form-label">YouTube URL или ID видео:</label>
+                            <input type="text" class="form-control" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=... или dQw4w9WgXcQ">
+                            <div class="form-text">Вставьте ссылку на YouTube видео или его ID</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="enableYouTube" checked>
+                            <label class="form-check-label" for="enableYouTube">Включить YouTube видео</label>
+                        </div>
+                    </div>
+
+                    <!-- Секция загрузки видео -->
+                    <div class="content-section mb-4">
+                        <h6>📹 Загрузить видео файл</h6>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="videoFileOriginal" accept="video/*">
+                            <div class="form-text">Поддерживаемые форматы: MP4, AVI, MOV, WMV (макс. 128MB)</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="enableVideoUpload">
+                            <label class="form-check-label" for="enableVideoUpload">Включить загруженное видео</label>
+                        </div>
+                    </div>
+
+                    <!-- Секция загрузки аудио -->
+                    <div class="content-section mb-3">
+                        <h6>🎵 Аудио запись</h6>
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="audioFileOriginal" accept="audio/*">
+                            <div class="form-text">Поддерживаемые форматы: MP3, WAV, OGG (макс. 50MB)</div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="enableAudioUpload" checked>
+                            <label class="form-check-label" for="enableAudioUpload">Включить аудио запись</label>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        💡 <strong>Все медиа могут отображаться одновременно!</strong> Вы можете включить YouTube видео, загруженное видео и аудио запись.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
