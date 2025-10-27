@@ -17,11 +17,12 @@ import rus.cheremisin.churchsong.entity.songparts.VideoPart;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OriginalRecording {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "video_part_id")
     VideoPart videoPart;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "audio_part_id")
     AudioPart audioPart;
 }

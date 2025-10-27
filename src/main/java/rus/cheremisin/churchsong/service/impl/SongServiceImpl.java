@@ -35,8 +35,9 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public SongDTO createSong(SongDTO dto) {
-        Song song = dao.save(mapper.toEntity(dto));
-        return mapper.toDto(song);
+        Song song = mapper.toEntity(dto);
+        Song songSaved = dao.save(song);
+        return mapper.toDto(songSaved);
     }
 
     @Override

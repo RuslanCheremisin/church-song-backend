@@ -29,7 +29,7 @@ public class SongController {
     }
 
     @PostMapping
-    public ResponseEntity<SongDTO> createSong(SongDTO dto) {
+    public ResponseEntity<SongDTO> createSong(@RequestBody SongDTO dto) {
         return ResponseEntity.ok(service.createSong(dto));
     }
 

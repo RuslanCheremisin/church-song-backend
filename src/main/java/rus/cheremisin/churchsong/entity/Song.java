@@ -18,15 +18,15 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Song {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
     Integer bpm;
     String songKey;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "orig_record_id")
+    @JoinColumn(name = "orig_recording_id")
     OriginalRecording origRec;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "song_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<SongPart> songParts;
 
 }
