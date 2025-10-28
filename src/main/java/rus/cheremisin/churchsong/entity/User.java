@@ -28,7 +28,6 @@ public class User implements UserDetails {
     String phone;
     String bio;
     List<String> instruments;
-    boolean isLeader;
     @ManyToMany
     @JoinTable(
             name = "user_favorite_songs",

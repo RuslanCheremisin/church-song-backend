@@ -14,10 +14,10 @@ import rus.cheremisin.churchsong.entity.songparts.VideoPart;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SongPartDTO {
+public class FullSongPartDTO {
     Long id;
-    VideoPart videoPart;
     AudioPart audioPart;
+    VideoPart videoPart;
     String text;
     ImagePart imagePart;
     DocPart docPart;

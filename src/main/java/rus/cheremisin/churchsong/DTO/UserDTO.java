@@ -24,7 +24,6 @@ public class UserDTO {
     private String phone;
     private String bio;
     List<String> instruments;
-    boolean isLeader;
     List<Song> favoriteSongs;
     List<Band> bands;
     AvatarImage userAvatar;

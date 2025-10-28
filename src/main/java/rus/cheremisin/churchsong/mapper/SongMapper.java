@@ -3,13 +3,14 @@ package rus.cheremisin.churchsong.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValueCheckStrategy;
 import rus.cheremisin.churchsong.DTO.FullSongDTO;
 import rus.cheremisin.churchsong.DTO.PatchSongDTO;
 import rus.cheremisin.churchsong.entity.Song;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface SongMapper {
 
     FullSongDTO toDto(Song song);
