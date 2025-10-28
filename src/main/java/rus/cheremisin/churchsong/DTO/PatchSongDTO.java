@@ -14,11 +14,9 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SongDTO {
+public class PatchSongDTO {
     Long id;
     String name;
     Integer bpm;
     String songKey;
-    OriginalRecording origRec;
-    List<SongPart> songParts;
 }

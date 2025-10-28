@@ -4,9 +4,11 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import rus.cheremisin.churchsong.entity.AvatarImage;
 import rus.cheremisin.churchsong.entity.Band;
+import rus.cheremisin.churchsong.entity.Role;
 import rus.cheremisin.churchsong.entity.Song;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +21,6 @@ public class UserDTO {
     private Long id;
     private String firstName;
     private String lastName;
-    private String email;
     private String phone;
     private String bio;
     List<String> instruments;
@@ -27,4 +28,7 @@ public class UserDTO {
     List<Song> favoriteSongs;
     List<Band> bands;
     AvatarImage userAvatar;
+    String email; //is used as login
+    String password;
+    Set<RoleDTO> roles;
 }

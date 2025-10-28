@@ -1,17 +1,18 @@
 package rus.cheremisin.churchsong.service;
 
-import rus.cheremisin.churchsong.DTO.SongDTO;
+import rus.cheremisin.churchsong.DTO.FullSongDTO;
+import rus.cheremisin.churchsong.DTO.PatchSongDTO;
 
 import java.util.List;
 
 public interface SongService {
-    SongDTO getSongById(Long id);
+    FullSongDTO getSongById(Long id);
 
-    List<SongDTO> getAllSongs();
+    List<FullSongDTO> getAllSongs();
 
-    SongDTO createSong(SongDTO dto);
+    FullSongDTO createSong(FullSongDTO dto);
 
-    SongDTO editSong(Long id, SongDTO dto);
+    FullSongDTO editSong(Long id, PatchSongDTO dto);
 
     void deleteSong(Long id);
 }

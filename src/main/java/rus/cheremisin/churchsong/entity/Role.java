@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @RequiredArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
