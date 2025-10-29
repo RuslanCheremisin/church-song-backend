@@ -6,6 +6,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 import rus.cheremisin.churchsong.DTO.FullSongDTO;
 import rus.cheremisin.churchsong.DTO.PatchSongDTO;
+import rus.cheremisin.churchsong.DTO.SimpleSongDTO;
 import rus.cheremisin.churchsong.entity.Song;
 
 import java.util.List;
@@ -13,7 +14,8 @@ import java.util.List;
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface SongMapper {
 
-    FullSongDTO toDto(Song song);
+    FullSongDTO toFullSongDto(Song song);
+    SimpleSongDTO toSimpleSongDto(Song song);
 
     @Mapping(target = "id", ignore = true)
     Song toEntity(FullSongDTO dto);

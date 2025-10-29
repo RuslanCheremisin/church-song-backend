@@ -3,8 +3,6 @@ package rus.cheremisin.churchsong.DTO;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import rus.cheremisin.churchsong.entity.AvatarImage;
-import rus.cheremisin.churchsong.entity.Song;
-import rus.cheremisin.churchsong.entity.User;
 
 import java.util.List;
 
@@ -18,11 +16,11 @@ import java.util.List;
 public class BandDTO {
     Long id;
     String name;
-    User leader;
+    UserMemberDTO leader;
     String email;
     String contactPhone;
     AvatarImage bandAvatar;
     String bio;
-    List<User> members;
-    List<Song> songs;
+    List<UserMemberDTO> members;
+    List<SimpleSongDTO> songs;
 }

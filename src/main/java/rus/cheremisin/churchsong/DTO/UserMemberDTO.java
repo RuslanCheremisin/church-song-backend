@@ -2,11 +2,8 @@ package rus.cheremisin.churchsong.DTO;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import rus.cheremisin.churchsong.entity.AvatarImage;
 
 import java.util.List;
-import java.util.Set;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -14,15 +11,10 @@ import java.util.Set;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDTO {
-    private Long id;
+public class UserMemberDTO {
     private String firstName;
     private String lastName;
     private String phone;
     private String bio;
     List<String> instruments;
-    List<SimpleSongDTO> favoriteSongs;
-    AvatarImage userAvatar;
-    String email; //is used as login
-    Set<RoleDTO> roles;
 }

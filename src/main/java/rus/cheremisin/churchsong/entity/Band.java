@@ -36,14 +36,6 @@ public class Band {
     @JoinColumn(name = "band_id")
     List<Song> songs;
 
-    public void addMember(User newMember) {
-        if (this.members == null) {
-            this.members = new ArrayList<>();
-        }
-        if (newMember != null && !members.contains(newMember)) {
-            members.add(newMember);
-        }
-    }
     public void removeMember(User newMember) {
         if (this.members == null || newMember == null || !members.contains(newMember)) {
             return;

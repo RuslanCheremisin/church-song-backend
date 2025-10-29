@@ -26,7 +26,7 @@ public class SongServiceImpl implements SongService {
         final Song song = dao.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("song с данным id не найден!")
         );
-        return mapper.toDto(song);
+        return mapper.toFullSongDto(song);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class SongServiceImpl implements SongService {
     public FullSongDTO createSong(FullSongDTO dto) {
         Song song = mapper.toEntity(dto);
         Song songSaved = dao.save(song);
-        return mapper.toDto(songSaved);
+        return mapper.toFullSongDto(songSaved);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SongServiceImpl implements SongService {
                         () -> new EntityNotFoundException("song с данным id не найден!")
                 );
         final Song updatedSong = mapper.mergeToEntity(dto, song);
-        return mapper.toDto(updatedSong);
+        return mapper.toFullSongDto(updatedSong);
     }
 
     @Override

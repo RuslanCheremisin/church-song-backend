@@ -1,7 +1,10 @@
 package rus.cheremisin.churchsong.controller;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rus.cheremisin.churchsong.DTO.*;
@@ -10,8 +13,8 @@ import rus.cheremisin.churchsong.service.BandService;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/bands")
 public class BandController {
     private BandService bandService;

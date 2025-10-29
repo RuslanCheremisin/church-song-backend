@@ -1,11 +1,13 @@
 package rus.cheremisin.churchsong.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +41,7 @@ public class User implements UserDetails {
             name = "user_bands",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "band_id"))
+    @JsonIgnore
     List<Band> bands;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_image_id")
@@ -81,5 +84,22 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
+    }
+
+    public void addBand(Band newBand) {
+        if (bands == null) {
+            bands = new ArrayList<>();
+        }
+        if (newBand != null && !bands.contains(newBand)) {
+            this.bands.add(newBand);
+        }
+    }
+    public void removeBand(Band bandToRemove) {
+        if (bands == null || bandToRemove == null) {
+            return;
+        }
+        if (bands.contains(bandToRemove)) {
+            this.bands.remove(bandToRemove);
+        }
     }
 }

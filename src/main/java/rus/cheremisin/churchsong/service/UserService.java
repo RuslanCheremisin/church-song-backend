@@ -1,6 +1,7 @@
 package rus.cheremisin.churchsong.service;
 
 import rus.cheremisin.churchsong.DTO.UserDTO;
+import rus.cheremisin.churchsong.entity.Band;
 
 import java.util.List;
 
@@ -15,4 +16,11 @@ public interface UserService {
 
     UserDTO getUserByUsername(String username);
     UserDTO findById(Long userId);
+
+    UserDTO addBandToUser(Long newMemberId, Band band);
+
+    void removeBandFromUser(Long memberId, Long bandId);
+
+    void addUserToBandAsLeader(Band band, Long leaderId);
+
 }
