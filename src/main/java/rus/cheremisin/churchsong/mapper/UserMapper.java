@@ -20,6 +20,7 @@ public interface UserMapper {
     List<UserDTO> toDtoList(List<User> users);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
     User mergeToEntity(UserDTO dto, @MappingTarget User user);
 
 

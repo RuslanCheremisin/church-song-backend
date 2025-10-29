@@ -48,7 +48,7 @@ public class BandServiceImpl implements BandService {
     @Override
     public BandDTO patchBand(Long bandId, PatchBandDTO dto) {
         Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
-        Band updatedBand = bandMapper.toEntity(bandMapper.mergeToEntity(dto, band));
+        Band updatedBand = bandMapper.mergeToEntity(dto, band);
         return bandMapper.toDto(dao.save(updatedBand));
     }
 

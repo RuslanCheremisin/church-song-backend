@@ -25,5 +25,5 @@ public interface BandMapper {
     @Mapping(target = "bandAvatar", ignore = true)
     @Mapping(target = "members", ignore = true)
     @Mapping(target = "songs", ignore = true)
-    BandDTO mergeToEntity(PatchBandDTO dto, @MappingTarget Band band);
+    Band mergeToEntity(PatchBandDTO dto, @MappingTarget Band band);
 }
