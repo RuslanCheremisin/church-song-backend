@@ -5,8 +5,6 @@ import rus.cheremisin.churchsong.DTO.UserDTO;
 import java.util.List;
 
 public interface UserService {
-    UserDTO getUserById(Long id);
-
     UserDTO addUser(UserDTO user);
 
     UserDTO updateUser(Long id, UserDTO user);
@@ -16,4 +14,5 @@ public interface UserService {
     void deleteUser(Long id);
 
     UserDTO getUserByUsername(String username);
+    UserDTO findById(Long userId);
 }

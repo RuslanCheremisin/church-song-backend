@@ -6,10 +6,10 @@ import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.List;
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
     @Override
-    public UserDTO getUserById(Long id) {
+    public UserDTO findById(Long id) {
         return null;
     }
 
