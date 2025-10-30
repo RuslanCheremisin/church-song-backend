@@ -36,7 +36,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id"))
     List<Song> favoriteSongs;
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "user_bands",
             joinColumns = @JoinColumn(name = "user_id"),

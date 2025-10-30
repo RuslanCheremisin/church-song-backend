@@ -42,5 +42,8 @@ public class UserController {
         userService.removeBandFromUser(userId, bandId);
         return ResponseEntity.ok().build();
     }
-    
-}
+    @DeleteMapping("/{user-id}")
+    public ResponseEntity<?> deleteBand(@PathVariable("user-id") Long userId) {
+       userService.deleteUser(userId);
+        return ResponseEntity.noContent().build();
+    }}

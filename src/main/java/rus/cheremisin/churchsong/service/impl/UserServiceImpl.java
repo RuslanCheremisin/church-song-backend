@@ -14,6 +14,7 @@ import rus.cheremisin.churchsong.exceptions.UserIsNotInTheBandException;
 import rus.cheremisin.churchsong.mapper.UserMapper;
 import rus.cheremisin.churchsong.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -79,12 +80,34 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         User userToDelete = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
+        List<Band> userBands = new ArrayList<>(userToDelete.getBands());
+        if (userBands != null) {
+            List<Band> ledBands = userBands
+                    .stream()
+                    .filter(b -> b
+                            .getLeader()
+                            .equals(userToDelete))
+                    .toList();
+            for (Band band : ledBands) {
+                if (band.getLeader() != null) {
+                    band.setLeader(null);
+                }
+            }
+            for (Band band : userBands) {
+                userToDelete.removeBand(band);
+                if (band.getMembers() != null) {
+                    band.getMembers().remove(userToDelete);
+                }
+            }
+        }
+
+        dao.saveAndFlush(userToDelete);
         dao.delete(userToDelete);
     }
 
     @Override
-    public UserDTO getUserByUsername(String username) {
-        User user = dao.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
+    public UserDTO getUserByUsername(String email) {
+        User user = dao.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
         return mapper.toDto(user);
     }
 }
