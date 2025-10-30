@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.BandDAO;
 import rus.cheremisin.churchsong.DTO.*;
 import rus.cheremisin.churchsong.entity.Band;
+import rus.cheremisin.churchsong.entity.User;
 import rus.cheremisin.churchsong.mapper.AvatarImageMapper;
 import rus.cheremisin.churchsong.mapper.BandMapper;
 import rus.cheremisin.churchsong.service.BandService;
@@ -58,24 +59,25 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public BandDTO changeBandAvatar(Long bandId, AvatarImageDTO dto) {
-        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
-        band.setBandAvatar(imageMapper.toEntity(dto));
-        return bandMapper.toDto(dao.save(band));
-    }
-
-    @Override
     public BandDTO grantMembershipRequest(Long bandId, GrantMembershipRequest request) {
         Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         userService.addBandToUser(request.getNewMemberId(), band);
-        return bandMapper.toDto(dao.save(band));
+        return bandMapper.toDto(band);
     }
 
     @Override
     public BandDTO cancelMembershipRequest(Long bandId, CancelMembershipRequest request) {
         Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         userService.removeBandFromUser(request.getMemberId(), bandId);
-        return bandMapper.toDto(dao.save(band));
+        return bandMapper.toDto(band);
+    }
+
+    @Override
+    public BandDTO changeBandAvatar(Long bandId, AvatarImageDTO dto) {
+        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        band.setBandAvatar(imageMapper.toEntity(dto));
+        Band upd = dao.save(band);
+        return bandMapper.toDto(dao.save(upd));
     }
 
     @Override

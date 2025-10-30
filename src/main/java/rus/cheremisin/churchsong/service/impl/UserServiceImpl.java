@@ -31,10 +31,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO addBandToUser(Long newMemberId, Band band) {
+    public Band addBandToUser(Long newMemberId, Band band) {
         User user = dao.findById(newMemberId).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
         user.addBand(band);
-        return mapper.toDto(dao.save(user));
+        band.addMember(user);
+        return band;
     }
 
     @Override

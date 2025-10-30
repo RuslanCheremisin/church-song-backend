@@ -17,7 +17,7 @@ public interface UserService {
     UserDTO getUserByUsername(String username);
     UserDTO findById(Long userId);
 
-    UserDTO addBandToUser(Long newMemberId, Band band);
+    Band addBandToUser(Long newMemberId, Band band);
 
     void removeBandFromUser(Long memberId, Long bandId);
 

@@ -36,10 +36,16 @@ public class Band {
     @JoinColumn(name = "band_id")
     List<Song> songs;
 
-    public void removeMember(User newMember) {
-        if (this.members == null || newMember == null || !members.contains(newMember)) {
+    public void removeMember(User memberToRemove) {
+        if (this.members == null || memberToRemove == null || !members.contains(memberToRemove)) {
             return;
         }
-        members.remove(newMember);
+        members.remove(memberToRemove);
+    }
+    public void addMember(User newMember) {
+        if (this.members == null || newMember == null || members.contains(newMember)) {
+            return;
+        }
+        members.add(newMember);
     }
 }
