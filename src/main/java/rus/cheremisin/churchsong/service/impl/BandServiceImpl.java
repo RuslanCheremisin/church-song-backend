@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.BandDAO;
 import rus.cheremisin.churchsong.DTO.*;
 import rus.cheremisin.churchsong.entity.Band;
+import rus.cheremisin.churchsong.entity.Song;
 import rus.cheremisin.churchsong.entity.User;
 import rus.cheremisin.churchsong.mapper.AvatarImageMapper;
 import rus.cheremisin.churchsong.mapper.BandMapper;
@@ -92,5 +93,18 @@ public class BandServiceImpl implements BandService {
     public void deleteBand(Long bandId) {
         Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         dao.delete(band);
+    }
+
+    @Override
+    public void addSongToBand(Long bandId, Song song) {
+        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        band.addSong(song);
+        dao.save(band);
+    }
+    @Override
+    public void removeSongFromBand(Long bandId, Song song) {
+        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        band.removeSong(song);
+        dao.save(band);
     }
 }

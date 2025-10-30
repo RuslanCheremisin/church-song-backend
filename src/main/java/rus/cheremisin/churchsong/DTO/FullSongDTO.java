@@ -21,4 +21,5 @@ public class FullSongDTO {
     String songKey;
     OriginalRecording origRec;
     List<SongPart> songParts;
+    BandDTO band;
 }

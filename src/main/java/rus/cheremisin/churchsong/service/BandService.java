@@ -1,6 +1,7 @@
 package rus.cheremisin.churchsong.service;
 
 import rus.cheremisin.churchsong.DTO.*;
+import rus.cheremisin.churchsong.entity.Song;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface BandService {
     BandDTO cancelMembershipRequest(Long bandId, CancelMembershipRequest request);
 
     void deleteBand(Long bandId);
+
+    void addSongToBand(Long id, Song song);
+
+    void removeSongFromBand(Long bandId, Song song);
 }

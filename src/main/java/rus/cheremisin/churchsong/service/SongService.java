@@ -10,9 +10,9 @@ public interface SongService {
 
     List<FullSongDTO> getAllSongs();
 
-    FullSongDTO createSong(FullSongDTO dto);
+    FullSongDTO createSong(FullSongDTO dto, Long bandId);
 
     FullSongDTO editSong(Long id, PatchSongDTO dto);
 
-    void deleteSong(Long id);
+    void deleteSong(Long songId, Long bandId);
 }

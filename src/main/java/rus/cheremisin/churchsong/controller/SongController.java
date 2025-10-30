@@ -25,23 +25,23 @@ public class SongController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FullSongDTO> getSongById(@PathVariable Long id) {
+    public ResponseEntity<FullSongDTO> getSongById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.getSongById(id));
     }
 
     @PostMapping
-    public ResponseEntity<FullSongDTO> createSong(@RequestBody FullSongDTO dto) {
-        return ResponseEntity.ok(service.createSong(dto));
+    public ResponseEntity<FullSongDTO> createSong(@RequestBody FullSongDTO dto, @RequestParam Long bandId) {
+        return ResponseEntity.ok(service.createSong(dto, bandId));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<FullSongDTO> editSong(@PathVariable Long id, @RequestBody PatchSongDTO dto) {
+    public ResponseEntity<FullSongDTO> editSong(@PathVariable("id") Long id, @RequestBody PatchSongDTO dto) {
         return ResponseEntity.ok(service.editSong(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<FullSongDTO> deleteSong(@PathVariable Long id) {
-        service.deleteSong(id);
+    public ResponseEntity<FullSongDTO> deleteSong(@PathVariable("id") Long songId, @RequestParam Long bandId) {
+        service.deleteSong(songId, bandId);
         return ResponseEntity.noContent().build();
     }
 }

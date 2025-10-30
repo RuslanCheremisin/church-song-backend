@@ -28,5 +28,7 @@ public class Song {
     OriginalRecording origRec;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<SongPart> songParts;
+    @ManyToOne
+    Band band;
 
 }

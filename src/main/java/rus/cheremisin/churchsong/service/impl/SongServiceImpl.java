@@ -10,6 +10,7 @@ import rus.cheremisin.churchsong.DTO.FullSongDTO;
 import rus.cheremisin.churchsong.DTO.PatchSongDTO;
 import rus.cheremisin.churchsong.mapper.SongMapper;
 import rus.cheremisin.churchsong.entity.Song;
+import rus.cheremisin.churchsong.service.BandService;
 import rus.cheremisin.churchsong.service.SongService;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class SongServiceImpl implements SongService {
 
     SongDAO dao;
     SongMapper mapper;
+    BandService bandService;
     @Override
     public FullSongDTO getSongById(Long id) {
         final Song song = dao.findById(id).orElseThrow(
@@ -35,10 +37,10 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public FullSongDTO createSong(FullSongDTO dto) {
+    public FullSongDTO createSong(FullSongDTO dto, Long bandId) {
         Song song = mapper.toEntity(dto);
-        Song songSaved = dao.save(song);
-        return mapper.toFullSongDto(songSaved);
+        bandService.addSongToBand(bandId, song);
+        return mapper.toFullSongDto(song);
     }
 
     @Override
@@ -52,11 +54,12 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public void deleteSong(Long id) {
-        Song song = dao.findById(id)
+    public void deleteSong(Long songId, Long bandId) {
+        Song song = dao.findById(songId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("song с данным id не найден!")
                 );
+        bandService.removeSongFromBand(bandId, song);
         dao.delete(song);
     }
 }
