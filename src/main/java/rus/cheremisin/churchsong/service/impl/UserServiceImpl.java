@@ -60,27 +60,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO addUser(UserDTO user) {
-        return null;
+    public UserDTO addUser(UserDTO dto) {
+        User user = mapper.toEntity(dto);
+        return mapper.toDto(dao.save(user));
     }
 
     @Override
-    public UserDTO updateUser(Long id, UserDTO user) {
-        return null;
+    public UserDTO updateUser(Long id, UserDTO dto) {
+        User user = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
+        return mapper.toDto(mapper.mergeToEntity(dto, user));
     }
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return List.of();
+        return mapper.toDtoList(dao.findAll());
     }
 
     @Override
     public void deleteUser(Long id) {
-
+        User userToDelete = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
+        dao.delete(userToDelete);
     }
 
     @Override
     public UserDTO getUserByUsername(String username) {
-        return null;
+        User user = dao.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
+        return mapper.toDto(user);
     }
 }
