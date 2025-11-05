@@ -11,7 +11,7 @@ import rus.cheremisin.churchsong.DTO.PatchSongDTO;
 import rus.cheremisin.churchsong.mapper.SongMapper;
 import rus.cheremisin.churchsong.entity.Song;
 import rus.cheremisin.churchsong.service.BandService;
-import rus.cheremisin.churchsong.service.SongService;
+import rus.cheremisin.churchsong.service.church.SongService;
 
 import java.util.List;
 

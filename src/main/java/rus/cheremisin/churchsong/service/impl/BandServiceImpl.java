@@ -78,7 +78,7 @@ public class BandServiceImpl implements BandService {
         Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         User newMember = userMapper.toEntity(userService.findById(request.getNewMemberId()));
         band.addMember(newMember);
-        return bandMapper.toDto(dao.save(band));
+        return bandMapper.toDto(userService.addBandToUser(newMember.getId(), band));
     }
 
     @Override

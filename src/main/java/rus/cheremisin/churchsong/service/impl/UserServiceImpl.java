@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
         User user = dao.findById(newMemberId).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
         user.addBand(band);
         band.addMember(user);
+        dao.save(user);
         return band;
     }
 
@@ -80,28 +81,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         User userToDelete = dao.findById(id).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
-        List<Band> userBands = new ArrayList<>(userToDelete.getBands());
-        if (userBands != null) {
-            List<Band> ledBands = userBands
-                    .stream()
-                    .filter(b -> b
-                            .getLeader()
-                            .equals(userToDelete))
-                    .toList();
-            for (Band band : ledBands) {
-                if (band.getLeader() != null) {
-                    band.setLeader(null);
-                }
-            }
-            for (Band band : userBands) {
-                userToDelete.removeBand(band);
-                if (band.getMembers() != null) {
-                    band.getMembers().remove(userToDelete);
-                }
+        List<Band> userBands = userToDelete.getBands() != null ? new ArrayList<>(userToDelete.getBands()) : new ArrayList<>();
+        List<Band> ledBands = userBands
+                .stream()
+                .filter(b -> b
+                        .getLeader()
+                        .equals(userToDelete))
+                .toList();
+        for (Band band : ledBands) {
+            if (band.getLeader() != null) {
+                band.setLeader(null);
             }
         }
-
-        dao.saveAndFlush(userToDelete);
+        for (Band band : userBands) {
+            userToDelete.removeBand(band);
+            if (band.getMembers() != null) {
+                band.getMembers().remove(userToDelete);
+            }
+        }
         dao.delete(userToDelete);
     }
 

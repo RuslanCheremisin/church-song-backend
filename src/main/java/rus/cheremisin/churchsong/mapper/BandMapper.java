@@ -23,7 +23,7 @@ public interface BandMapper {
 //    @Mapping(target = "id", ignore = true)
     @Mapping(target = "leader", ignore = true)
     @Mapping(target = "bandAvatar", ignore = true)
-    @Mapping(target = "members", ignore = true)
+//    @Mapping(target = "members", ignore = true)
     @Mapping(target = "songs", ignore = true)
     Band mergeToEntity(PatchBandDTO dto, @MappingTarget Band band);
 }

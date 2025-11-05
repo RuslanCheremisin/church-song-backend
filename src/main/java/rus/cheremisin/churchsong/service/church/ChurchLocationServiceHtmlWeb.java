@@ -1,4 +1,4 @@
-package rus.cheremisin.churchsong.service.impl;
+package rus.cheremisin.churchsong.service.church;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -8,7 +8,6 @@ import rus.cheremisin.churchsong.DAO.ChurchLocationDAO;
 import rus.cheremisin.churchsong.DTO.church.ChurchLocationDTO;
 import rus.cheremisin.churchsong.DTO.HtmlWeb.HtmlWebLocationDTO;
 import rus.cheremisin.churchsong.DTO.HtmlWeb.HtmlWebResponse;
-import rus.cheremisin.churchsong.service.ChurchLocationService;
 import rus.cheremisin.churchsong.entity.church.ChurchLocation;
 import rus.cheremisin.churchsong.util.Utils;
 import rus.cheremisin.churchsong.util.impl.HtmlWebDTOMapper;

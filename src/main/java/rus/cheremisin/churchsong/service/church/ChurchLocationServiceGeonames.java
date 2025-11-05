@@ -1,4 +1,4 @@
-package rus.cheremisin.churchsong.service.impl;
+package rus.cheremisin.churchsong.service.church;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,6 @@ import org.springframework.web.client.RestTemplate;
 import rus.cheremisin.churchsong.DAO.ChurchLocationDAO;
 import rus.cheremisin.churchsong.DTO.church.ChurchLocationDTO;
 import rus.cheremisin.churchsong.DTO.GeoNames.GeoNamesResponse;
-import rus.cheremisin.churchsong.service.ChurchLocationService; //2017623
 import rus.cheremisin.churchsong.util.Utils;
 
 import javax.xml.bind.JAXBException;

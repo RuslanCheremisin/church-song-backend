@@ -1,4 +1,4 @@
-package rus.cheremisin.churchsong.service;
+package rus.cheremisin.churchsong.service.church;
 
 import rus.cheremisin.churchsong.DTO.church.ChurchLocationDTO;
 

@@ -15,14 +15,15 @@ import java.util.Set;
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserDTO {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private String phone;
-    private String bio;
+    Long id;
+    String firstName;
+    String lastName;
+    String phone;
+    String bio;
     List<String> instruments;
     List<SimpleSongDTO> favoriteSongs;
-    AvatarImage userAvatar;
+    AvatarImageDTO userAvatar;
     String email; //is used as login
     Set<RoleDTO> roles;
+    List<SimpleBandDTO> bands;
 }

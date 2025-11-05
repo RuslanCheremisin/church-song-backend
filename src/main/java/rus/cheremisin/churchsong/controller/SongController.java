@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rus.cheremisin.churchsong.DTO.FullSongDTO;
 import rus.cheremisin.churchsong.DTO.PatchSongDTO;
-import rus.cheremisin.churchsong.service.SongService;
+import rus.cheremisin.churchsong.service.church.SongService;
 
 import java.util.List;
 
