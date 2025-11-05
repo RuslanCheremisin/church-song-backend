@@ -3,6 +3,8 @@ package rus.cheremisin.churchsong.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import rus.cheremisin.churchsong.exceptions.UserIsAlreadyInTheBandException;
+import rus.cheremisin.churchsong.exceptions.UserIsNotInTheBandException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +47,13 @@ public class Band {
     public void addMember(User newMember) {
         boolean memberOfTheBand = members.stream().anyMatch(u -> u.getId().equals(newMember.getId()));
         if (this.members == null || newMember == null || memberOfTheBand) {
-            return;
+            throw new UserIsAlreadyInTheBandException("user is already in the band");
         }
         members.add(newMember);
     }
     public void removeMember(Long memberId) {
         if (this.members == null || memberId == null) {
-            return;
+            throw new UserIsNotInTheBandException("user is not in the band");
         }
         User memberToRemove = members.stream().filter( u -> u.getId().equals(memberId)).findFirst().orElseThrow(NoSuchElementException::new);
         members.remove(memberToRemove);
