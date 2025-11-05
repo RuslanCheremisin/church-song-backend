@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rus.cheremisin.churchsong.DTO.CancelMembershipRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
+import rus.cheremisin.churchsong.service.BandService;
 import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     UserService userService;
+    BandService bandService;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -39,8 +42,8 @@ public class UserController {
 
     @PatchMapping("/{user-id}/leave")
     public ResponseEntity<UserDTO> leaveBand(@PathVariable("user-id") Long userId, @RequestParam Long bandId) {
-        userService.removeBandFromUser(userId, bandId);
-        return ResponseEntity.ok().build();
+        bandService.cancelMembershipRequest(bandId, new CancelMembershipRequest(userId));
+        return ResponseEntity.ok(userService.findById(userId));
     }
     @DeleteMapping("/{user-id}")
     public ResponseEntity<?> deleteBand(@PathVariable("user-id") Long userId) {

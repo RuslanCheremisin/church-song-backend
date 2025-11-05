@@ -6,6 +6,8 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "bands")
@@ -30,22 +32,28 @@ public class Band {
     @JoinColumn(name = "avatar_image_id")
     AvatarImage bandAvatar;
     String bio;
-    @ManyToMany(mappedBy = "bands")
+    @ManyToMany
+    @JoinTable(
+            name = "user_bands",
+            joinColumns = @JoinColumn(name = "band_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     List<User> members;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "band_id")
     List<Song> songs;
 
     public void addMember(User newMember) {
-        if (this.members == null || newMember == null || members.contains(newMember)) {
+        boolean memberOfTheBand = members.stream().anyMatch(u -> u.getId().equals(newMember.getId()));
+        if (this.members == null || newMember == null || memberOfTheBand) {
             return;
         }
         members.add(newMember);
     }
-    public void removeMember(User memberToRemove) {
-        if (this.members == null || memberToRemove == null || !members.contains(memberToRemove)) {
+    public void removeMember(Long memberId) {
+        if (this.members == null || memberId == null) {
             return;
         }
+        User memberToRemove = members.stream().filter( u -> u.getId().equals(memberId)).findFirst().orElseThrow(NoSuchElementException::new);
         members.remove(memberToRemove);
     }
     public void addSong(Song newSong) {

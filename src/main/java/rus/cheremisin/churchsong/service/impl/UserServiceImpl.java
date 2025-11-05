@@ -32,11 +32,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Band addBandToUser(Long newMemberId, Band band) {
-        User user = dao.findById(newMemberId).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
-        user.addBand(band);
-        band.addMember(user);
-        dao.save(user);
+    public Band addBandToUser(User member, Band band) {
+        member.addBand(band);
+//        band.addMember(member);
         return band;
     }
 
@@ -50,7 +48,6 @@ public class UserServiceImpl implements UserService {
                 .findAny()
                 .orElseThrow(() -> new UserIsNotInTheBandException("user is not in the band"));
         member.removeBand(band);
-        dao.save(member);
     }
 
     @Override

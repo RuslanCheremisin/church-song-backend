@@ -36,12 +36,8 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id"))
     List<Song> favoriteSongs;
-    @ManyToMany()
-    @JoinTable(
-            name = "user_bands",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "band_id"))
-    @JsonIgnore
+    @ManyToMany(mappedBy = "members")
+//    @JsonIgnore
     List<Band> bands;
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "avatar_image_id")
@@ -49,6 +45,9 @@ public class User implements UserDetails {
 
     String email; //is used as login
     String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn (name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+
     Set<Role> roles;
 
     @Override

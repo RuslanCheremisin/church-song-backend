@@ -77,16 +77,19 @@ public class BandServiceImpl implements BandService {
     public BandDTO grantMembershipRequest(Long bandId, GrantMembershipRequest request) {
         Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         User newMember = userMapper.toEntity(userService.findById(request.getNewMemberId()));
+        userService.addBandToUser(newMember, band);
         band.addMember(newMember);
-        return bandMapper.toDto(userService.addBandToUser(newMember.getId(), band));
+        dao.save(band);
+        return bandMapper.toDto(band);
     }
 
     @Override
     public BandDTO cancelMembershipRequest(Long bandId, CancelMembershipRequest request) {
         Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
-        User newMember = userMapper.toEntity(userService.findById(request.getMemberId()));
-        band.removeMember(newMember);
-        return bandMapper.toDto(dao.save(band));
+        userService.removeBandFromUser(request.getMemberId(), bandId);
+        band.removeMember(request.getMemberId());
+        dao.save(band);
+        return bandMapper.toDto(band);
     }
 
     @Override
@@ -101,6 +104,7 @@ public class BandServiceImpl implements BandService {
         band.addSong(song);
         dao.save(band);
     }
+
     @Override
     public void removeSongFromBand(Long bandId, Song song) {
         Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
