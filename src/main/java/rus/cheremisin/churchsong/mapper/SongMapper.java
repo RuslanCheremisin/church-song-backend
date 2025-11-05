@@ -20,7 +20,7 @@ public interface SongMapper {
     @Mapping(target = "id", ignore = true)
     Song toEntity(FullSongDTO dto);
 
-    List<FullSongDTO> toDtoList(List<Song> songs);
+    List<SimpleSongDTO> toDtoList(List<Song> songs);
 
     @Mapping(target = "origRec", ignore = true)
     @Mapping(target = "songParts", ignore = true)

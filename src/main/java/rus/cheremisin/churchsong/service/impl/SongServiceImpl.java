@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import rus.cheremisin.churchsong.DAO.SongDAO;
 import rus.cheremisin.churchsong.DTO.FullSongDTO;
 import rus.cheremisin.churchsong.DTO.PatchSongDTO;
+import rus.cheremisin.churchsong.DTO.SimpleSongDTO;
 import rus.cheremisin.churchsong.mapper.SongMapper;
 import rus.cheremisin.churchsong.entity.Song;
 import rus.cheremisin.churchsong.service.BandService;
@@ -32,7 +33,7 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public List<FullSongDTO> getAllSongs() {
+    public List<SimpleSongDTO> getAllSongs() {
         return mapper.toDtoList(dao.findAll());
     }
 

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rus.cheremisin.churchsong.DTO.FullSongDTO;
 import rus.cheremisin.churchsong.DTO.PatchSongDTO;
+import rus.cheremisin.churchsong.DTO.SimpleSongDTO;
 import rus.cheremisin.churchsong.service.church.SongService;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class SongController {
     SongService service;
 
     @GetMapping
-    public ResponseEntity<List<FullSongDTO>> getSongs() {
+    public ResponseEntity<List<SimpleSongDTO>> getAllSongs() {
         return ResponseEntity.ok(service.getAllSongs());
     }
 

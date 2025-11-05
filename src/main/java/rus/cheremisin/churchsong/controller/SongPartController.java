@@ -11,7 +11,7 @@ import java.util.List;
 public class SongPartController {
 
     @GetMapping
-    public ResponseEntity<List<FullSongPartDTO>> getSongParts() {
+    public ResponseEntity<List<FullSongPartDTO>> getSongParts(@PathVariable("song-id") Long songId) {
         return ResponseEntity.ok().build();
     }
     
