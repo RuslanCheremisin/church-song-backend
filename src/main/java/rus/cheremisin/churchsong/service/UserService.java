@@ -22,6 +22,4 @@ public interface UserService {
 
     void removeBandFromUser(Long memberId, Long bandId);
 
-    void addUserToBandAsLeader(Band band, Long leaderId);
-
 }

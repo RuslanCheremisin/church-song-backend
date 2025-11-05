@@ -51,14 +51,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUserToBandAsLeader(Band band, Long leaderId) {
-        User leader = dao.findById(leaderId).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
-        if (band != null) {
-            band.setLeader(leader);
-        }
-    }
-
-    @Override
     public UserDTO addUser(UserDTO dto) {
         User user = mapper.toEntity(dto);
         return mapper.toDto(dao.save(user));
