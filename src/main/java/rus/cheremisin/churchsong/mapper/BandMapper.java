@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import rus.cheremisin.churchsong.DTO.BandDTO;
 import rus.cheremisin.churchsong.DTO.PatchBandDTO;
+import rus.cheremisin.churchsong.DTO.SimpleBandDTO;
 import rus.cheremisin.churchsong.entity.Band;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface BandMapper {
     Band toEntity(BandDTO dto);
 
 //    @Mapping(target = "id", ignore = true)
-    List<BandDTO> toDtoList(List<Band> all);
+    List<SimpleBandDTO> toDtoList(List<Band> all);
 
 //    @Mapping(target = "id", ignore = true)
     @Mapping(target = "leader", ignore = true)

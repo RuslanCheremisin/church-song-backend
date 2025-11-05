@@ -6,7 +6,7 @@ import rus.cheremisin.churchsong.entity.Song;
 import java.util.List;
 
 public interface BandService {
-    List<BandDTO> getAllBands();
+    List<SimpleBandDTO> getAllBands();
 
     BandDTO getBandById(Long bandId);
 

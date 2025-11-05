@@ -32,7 +32,7 @@ public class BandServiceImpl implements BandService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BandDTO> getAllBands() {
+    public List<SimpleBandDTO> getAllBands() {
         return bandMapper.toDtoList(dao.findAll());
     }
 

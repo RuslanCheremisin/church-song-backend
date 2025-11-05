@@ -20,7 +20,7 @@ public class BandController {
     private BandService bandService;
 
     @GetMapping
-    public ResponseEntity<List<BandDTO>> getAllBands() {
+    public ResponseEntity<List<SimpleBandDTO>> getAllBands() {
         return ResponseEntity.ok(bandService.getAllBands());
     }
 
