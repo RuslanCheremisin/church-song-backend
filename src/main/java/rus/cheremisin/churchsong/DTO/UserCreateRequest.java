@@ -14,17 +14,10 @@ import java.util.Set;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDTO {
-    Long id;
+public class UserCreateRequest {
     String firstName;
     String lastName;
-    String phone;
-    String bio;
-    List<String> instruments;
-    List<SimpleSongDTO> favoriteSongs;
     AvatarImageDTO userAvatar;
     String email;
     String username;
-    Set<RoleDTO> roles;
-    List<SimpleBandDTO> bands;
 }

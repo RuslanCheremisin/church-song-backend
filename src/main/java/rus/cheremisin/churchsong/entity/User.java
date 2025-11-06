@@ -7,14 +7,12 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -47,9 +45,44 @@ public class User implements UserDetails {
     @JoinColumn(name = "avatar_image_id")
     AvatarImage userAvatar;
 
-    String email; //is used as login
+    String email;
+
+    String username;
     String password;
     Set<Role> roles;
+
+    Timestamp createdAt;
+    Timestamp updatedAt;
+
+    public User(Long id,
+                String firstName,
+                String lastName,
+                String phone,
+                String bio,
+                List<String> instruments,
+                List<Song> favoriteSongs,
+                List<Band> bands,
+                AvatarImage userAvatar,
+                String email,
+                String username,
+                String password,
+                Set<Role> roles) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.bio = bio;
+        this.instruments = instruments;
+        this.favoriteSongs = favoriteSongs;
+        this.bands = bands;
+        this.userAvatar = userAvatar;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+        this.createdAt = new Timestamp(new Date().getTime());
+        this.updatedAt = new Timestamp(new Date().getTime());
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

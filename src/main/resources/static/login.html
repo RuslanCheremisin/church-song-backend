@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Church Song - Организация песен для групп прославления</title>
+    <title>Church Song - Вход в систему</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="landing-styles.css">
+    <link rel="stylesheet" href="login-styles.css">
 </head>
 <body>
 
-<!-- Background Video -->
-<div class="video-background">
-    <video autoplay muted loop id="bgVideo" playsinline>
-        <source src="videos/landing-BG.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <div class="video-overlay"></div>
+<!-- Background (без видео) -->
+<div class="login-background">
+    <div class="background-overlay"></div>
 </div>
 
-<!-- Navigation Bar -->
+<!-- Navigation Bar (идентичная главной странице) -->
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <span class="brand-text">Church Song</span>
         </a>
 
@@ -32,7 +28,7 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/songs">Songs</a></li>
                 <li class="nav-item"><a class="nav-link" href="/bands">Bands</a></li>
                 <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
@@ -120,13 +116,106 @@
 </nav>
 
 <!-- Main Content -->
-<div class="main-content-wrapper">
-    <div class="container main-content text-center">
-        <h1 class="display-4 mb-4 main-title">Church Song</h1>
-        <p class="lead mb-5">Путь к вдохновению начинается с порядка.</p>
-        <div class="cta-buttons">
-            <button class="btn btn-primary btn-lg me-3" id="exploreSongsBtn">Найти песни</button>
-            <button class="btn btn-outline-light btn-lg" id="createBandBtn">Создать группу</button>
+<div class="login-content-wrapper">
+    <div class="container login-content">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-card">
+                    <div class="card-header">
+                        <h2 class="text-center">Вход в систему</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Форма входа -->
+                        <form id="loginForm" class="auth-form">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email или имя пользователя</label>
+                                <input type="text" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Пароль</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Запомнить меня</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 mb-3">Войти</button>
+                            <div class="text-center">
+                                <a href="#" id="forgotPasswordLink" class="text-link">Забыли пароль?</a>
+                            </div>
+                        </form>
+
+                        <!-- Форма регистрации -->
+                        <form id="registerForm" class="auth-form d-none">
+                            <div class="mb-3">
+                                <label for="regName" class="form-label">Имя</label>
+                                <input type="text" class="form-control" id="regName" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="regEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="regEmail" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="regPassword" class="form-label">Пароль</label>
+                                <input type="password" class="form-control" id="regPassword" name="password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="regConfirmPassword" class="form-label">Подтвердите пароль</label>
+                                <input type="password" class="form-control" id="regConfirmPassword" name="confirmPassword" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 mb-3">Зарегистрироваться</button>
+                            <div class="text-center">
+                                <a href="#" id="backToLoginLink" class="text-link">Вернуться к входу</a>
+                            </div>
+                        </form>
+
+                        <!-- Форма сброса пароля -->
+                        <form id="resetPasswordForm" class="auth-form d-none">
+                            <div class="mb-3">
+                                <label for="resetEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="resetEmail" name="email" required>
+                                <div class="form-text">Мы отправим вам ссылку для сброса пароля</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 mb-3">Сбросить пароль</button>
+                            <div class="text-center">
+                                <a href="#" id="backToLoginFromResetLink" class="text-link">Вернуться к входу</a>
+                            </div>
+                        </form>
+
+                        <!-- Социальные сети -->
+                        <div class="social-login mt-4">
+                            <div class="divider">
+                                <span>или войдите через</span>
+                            </div>
+                            <div class="social-buttons">
+                                <a href="/oauth2/authorization/google" class="btn btn-outline-primary w-100 mb-2 d-flex align-items-center justify-content-center">
+                                    <img src="glogo.png" alt="Google" width="18" height="18" class="me-2">
+                                    Google
+                                </a>
+                                <a href="/oauth2/authorization/apple" class="btn btn-outline-primary w-100 mb-2 d-flex align-items-center justify-content-center">
+                                    <img src="applelogo.png" alt="Apple" width="18" height="18" class="me-2">
+                                    Apple
+                                </a>
+                                <a href="/oauth2/authorization/telegram" class="btn btn-outline-primary w-100 mb-2 d-flex align-items-center justify-content-center">
+                                    <img src="tglogo.png" alt="Telegram" width="18" height="18" class="me-2">
+                                    Telegram
+                                </a>
+                                <a href="/oauth2/authorization/yandex" class="btn btn-outline-primary w-100 mb-2 d-flex align-items-center justify-content-center">
+                                    <img src="yalogo.png" alt="Yandex" width="18" height="18" class="me-2">
+                                    Yandex
+                                </a>
+                                <a href="/oauth2/authorization/vk" class="btn btn-outline-primary w-100 mb-2 d-flex align-items-center justify-content-center">
+                                    <img src="vklogo.png" alt="VK ID" width="18" height="18" class="me-2">
+                                    VK ID
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <p class="mb-0">Нет аккаунта? <a href="#" id="showRegisterLink" class="text-link">Зарегистрироваться</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -172,6 +261,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="landing-script.js"></script>
+<script src="login-script.js"></script>
 </body>
 </html>
