@@ -73,6 +73,9 @@ body {
 .navbar-nav .nav-link.active {
     background-color: rgba(0, 168, 204, 0.3);
 }
+.navbar-brand .logo {
+    margin-right: 10px; /* Регулируем расстояние между логотипом и текстом */
+}
 
 /* --- Основной контент поверх видео --- */
 .main-content-wrapper {
@@ -107,6 +110,11 @@ body {
 .lead {
     font-size: 1.5rem;
     margin-bottom: 2rem;
+}
+/* Логотип */
+.logo {
+    width: 40px; /* Ширина логотипа */
+    height: auto; /* Высота будет пропорциональна ширине */
 }
 
 /* --- Кнопки --- */
