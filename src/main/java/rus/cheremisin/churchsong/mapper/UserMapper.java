@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
+import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserMemberDTO;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.User;
@@ -19,6 +20,8 @@ public interface UserMapper {
 
 //    @Mapping(target = "id", ignore = true)
     User toEntity(UserDTO dto);
+
+    User fromCreateRequestToEntity(UserCreateRequest request);
 
     List<UserDTO> toDtoList(List<User> users);
     List<UserMemberDTO> toMemberDtoList(List<User> users);

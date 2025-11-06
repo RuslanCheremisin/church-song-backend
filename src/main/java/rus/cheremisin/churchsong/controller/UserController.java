@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.service.UserService;
 
@@ -28,8 +29,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO dto) {
-        return ResponseEntity.ok(userService.addUser(dto));
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserCreateRequest request) {
+        return ResponseEntity.ok(userService.addUser(request));
     }
 
     @PatchMapping("/{user-id}")

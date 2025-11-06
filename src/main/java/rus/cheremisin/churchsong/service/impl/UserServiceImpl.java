@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.UserDAO;
+import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.Band;
 import rus.cheremisin.churchsong.entity.User;
@@ -62,8 +63,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO addUser(UserDTO dto) {
-        User user = mapper.toEntity(dto);
+    public UserDTO addUser(UserCreateRequest request) {
+        User user = mapper.fromCreateRequestToEntity(request);
         return mapper.toDto(dao.save(user));
     }
 

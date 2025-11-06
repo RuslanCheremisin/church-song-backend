@@ -1,12 +1,14 @@
 package rus.cheremisin.churchsong.service;
 
+import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.Band;
 
 import java.util.List;
 
 public interface UserService {
-    UserDTO addUser(UserDTO user);
+
+    UserDTO addUser(UserCreateRequest request);
 
     UserDTO updateUser(Long id, UserDTO user);
 
