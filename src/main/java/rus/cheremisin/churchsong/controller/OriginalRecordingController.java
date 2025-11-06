@@ -8,7 +8,7 @@ import rus.cheremisin.churchsong.DTO.songparts.VideoPartDTO;
 
 import java.util.List;
 
-@RestController
+//@RestController
 @RequestMapping("/songs/{song-id}/original-recording")
 public class OriginalRecordingController {
 

@@ -6,7 +6,7 @@ import rus.cheremisin.churchsong.DTO.songparts.*;
 
 import java.util.List;
 
-@RestController
+//@RestController
 @RequestMapping("/songs/{song-id}/parts")
 public class SongPartController {
 
