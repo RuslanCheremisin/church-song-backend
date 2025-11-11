@@ -12,29 +12,40 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
+        return http
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
                                         "/",
-                                        "/auth/local/login",
+                                        "/auth",
+                                        "/home",
                                         "/auth/local/register",
-                                        "/songs",
-                                        "/bands",
-                                        "/blog",
+                                        "/songs/**",
+                                        "/bands/**",
+                                        "/blog/**",
                                         "/videos/**",
+                                        "/images/**",
                                         "/css/**",
-                                        "/js/**")
+                                        "/js/**",
+                                        "/error"
+
+                                )
                                 .permitAll()
-                                .anyRequest().authenticated())
-                .oauth2Login(oauth2 -> oauth2.loginPage("/login")
-                        .defaultSuccessUrl("/")
-                        .failureUrl("/login?error=true")
+//                                .anyRequest().authenticated()
+                )
+                .formLogin(form -> form.permitAll()
+                        .loginPage("/auth.html")
+//                        .loginProcessingUrl("/auth")
+                        .defaultSuccessUrl("/index.html", true)
+                )
+                .oauth2Login(oauth2 -> oauth2.loginPage("/auth")
+                        .defaultSuccessUrl("/home")
+                        .failureUrl("/auth?error=true")
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/index.html")
                         .permitAll())
-
+//                .csrf(csrf -> csrf.disable())
                 .build();
     }
 

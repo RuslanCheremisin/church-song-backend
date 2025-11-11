@@ -1,0 +1,138 @@
+/* ====== Church Song Unified Styles ====== */
+/* === Базовые настройки === */
+html {
+    scroll-behavior: smooth;
+    overflow-y: scroll; /* всегда показываем скролл — без рывков */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #f0f8ff;
+    background: linear-gradient(135deg, #142850, #27496D, #0C7B93, #00A8CC);
+    background-attachment: fixed;
+    overflow-y: auto;
+    margin: 0;
+}
+
+/* === Navbar === */
+.custom-navbar {
+    background-color: rgba(20, 40, 80, 0.8);
+    backdrop-filter: blur(8px);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-navbar.scrolled {
+    background-color: rgba(20, 40, 80, 0.9);
+    box-shadow: 0 4px 15px rgba(0, 168, 204, 0.2);
+}
+
+.navbar-brand .logo {
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+.navbar-brand .logo:hover {
+    transform: scale(1.05);
+}
+
+/* === Buttons === */
+.btn-primary,
+.btn-outline-primary {
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-primary {
+    background-color: #00A8CC;
+    border-color: #00A8CC;
+    color: #fff;
+}
+.btn-primary:hover {
+    background-color: #0C7B93;
+    border-color: #0C7B93;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 168, 204, 0.3);
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+    border: 2px solid #00A8CC;
+    color: #00A8CC;
+}
+.btn-outline-primary:hover {
+    background-color: #00A8CC;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 168, 204, 0.3);
+}
+
+/* === Input fields === */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #00A8CC;
+    box-shadow: 0 0 0 0.25rem rgba(0, 168, 204, 0.25);
+    color: #fff;
+}
+
+/* === Links === */
+a {
+    color: #00A8CC;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+a:hover {
+    color: #00d5ff;
+}
+
+/* === Cards / Containers === */
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* === Modal fixes === */
+body.modal-open {
+    overflow: hidden;
+    padding-right: 0 !important;
+}
+.modal-content {
+    background: rgba(20, 40, 80, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    color: #f0f8ff;
+}
+
+/* === Utility classes === */
+.text-glow {
+    text-shadow: 0 0 8px rgba(0, 168, 204, 0.5);
+}
+.section-title {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #E0F7FA;
+}
+
+/* === Footer === */
+footer {
+    background-color: rgba(20, 40, 80, 0.85);
+    color: #E0F7FA;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+}
