@@ -10,9 +10,11 @@ import rus.cheremisin.churchsong.DAO.UserDAO;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.Band;
+import rus.cheremisin.churchsong.entity.Role;
 import rus.cheremisin.churchsong.entity.User;
 import rus.cheremisin.churchsong.exceptions.UserIsNotInTheBandException;
 import rus.cheremisin.churchsong.mapper.UserMapper;
+import rus.cheremisin.churchsong.service.RoleService;
 import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService {
 
     UserDAO dao;
     UserMapper mapper;
+    RoleService roleService;
 
     @Override
     public UserDTO findById(Long id) {
@@ -65,6 +68,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO addUser(UserCreateRequest request) {
         User user = mapper.fromCreateRequestToEntity(request);
+        user.addRole(roleService.getRoleByName("USER"));
         return mapper.toDto(dao.save(user));
     }
 

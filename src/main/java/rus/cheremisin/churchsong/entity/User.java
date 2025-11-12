@@ -135,4 +135,12 @@ public class User implements UserDetails {
             this.bands.remove(bandToRemove);
         }
     }
+    public void addRole(Role role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        if (role != null && !roles.contains(role)) {
+            this.roles.add(role);
+        }
+    }
 }

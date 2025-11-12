@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+html {
+    overflow-y: scroll; /* Скроллбар поверх контента без сдвигов */
+}
 
 body {
     font-family: 'Montserrat', sans-serif;
@@ -75,6 +78,11 @@ body {
 }
 .navbar-brand .logo {
     margin-right: 10px; /* Регулируем расстояние между логотипом и текстом */
+}
+@media (max-width: 768px) {
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1.5rem; /* ← увеличили горизонтальные отступы */
+    }
 }
 .dropdown-menu {
     min-width: 280px !important;
@@ -242,6 +250,28 @@ body {
     .lead {
         font-size: 1.2rem;
     }
+    .dropdown-menu {
+        position: fixed !important;
+        top: 300px !important;
+        left: 70% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        max-width: 300px !important;
+    }
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem; /* ← паддинг в мобильной версии */
+        text-align: left;
+        width: 100%;
+    }
+    .modal-dialog {
+        max-width: 95%; /* ← занимает 95% ширины экрана */
+        margin: 0.5rem auto;
+    }
+
+    .modal-content {
+        width: 100%; /* ← растягивает контент на всю доступную ширину */
+    }
+
 }
 .modal-backdrop {
     z-index: 1040 !important;

@@ -201,10 +201,11 @@ class AuthManager {
         }, 1500);
     }
 
-    handleRegistration() {
+    async handleRegistration() {
         const firstName = document.getElementById('firstName').value;
         const lastName = document.getElementById('lastName').value;
         const email = document.getElementById('registerEmail').value;
+        const username = document.getElementById('registerUsername').value;
         const password = document.getElementById('registerPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
         const agreeTerms = document.getElementById('agreeTerms').checked;
@@ -217,6 +218,10 @@ class AuthManager {
 
         if (!this.validateEmail(email)) {
             this.showMessage('Пожалуйста, введите корректный email', 'error');
+            return;
+        }
+        if (!username) {
+            this.showMessage('Пожалуйста, введите логин', 'error');
             return;
         }
 
@@ -235,17 +240,48 @@ class AuthManager {
             return;
         }
 
-        // Имитация запроса на сервер
         this.showMessage('Регистрация выполняется...', 'info');
 
-        setTimeout(() => {
-            // В реальном приложении здесь будет запрос к API
-            const token = 'mock_jwt_token_' + Date.now();
-            localStorage.setItem('authToken', token);
+        const userData = {
+            firstName: firstName.trim(),
+            lastName: lastName.trim(),
+            email: email.trim(),
+            username: username.trim(),
+            password: password
+        };
+
+        try {
+            this.showMessage('Регистрация выполняется...', 'info');
+
+            // Отправка запроса на сервер
+            const response = await fetch('/auth/local/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || `Ошибка сервера: ${response.status}`);
+            }
+
+            const userDTO = await response.json();
+
+            // Сохраняем токен (если он возвращается в ответе)
+            if (userDTO.token) {
+                localStorage.setItem('authToken', userDTO.token);
+            }
+
+            // Сохраняем данные пользователя
             this.currentUser = {
-                name: firstName + ' ' + lastName,
-                email: email
+                id: userDTO.id,
+                name: `${userDTO.firstName} ${userDTO.lastName}`,
+                username: userDTO.username,
+                email: userDTO.email
             };
+
             this.updateUI(true);
             this.showMessage('Регистрация выполнена успешно!', 'success');
 
@@ -253,7 +289,11 @@ class AuthManager {
             setTimeout(() => {
                 window.location.href = '/';
             }, 1000);
-        }, 1500);
+
+        } catch (error) {
+            console.error('Ошибка регистрации:', error);
+            this.showMessage(error.message || 'Произошла ошибка при регистрации', 'error');
+        }
     }
 
     showResetPasswordModal() {
