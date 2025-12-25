@@ -4,6 +4,10 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.UserDAO;
@@ -24,11 +28,13 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     UserDAO dao;
     UserMapper mapper;
     RoleService roleService;
+    PasswordEncoder passwordEncoder;
+    private final UserDAO userDAO;
 
     @Override
     public UserDTO findById(Long id) {
@@ -68,6 +74,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO addUser(UserCreateRequest request) {
         User user = mapper.fromCreateRequestToEntity(request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.addRole(roleService.getRoleByName("USER"));
         return mapper.toDto(dao.save(user));
     }
@@ -108,8 +115,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserByUsername(String email) {
-        User user = dao.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
+    public UserDTO getUserByUsername(String username) {
+        User user = dao.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("no user with such username"));
         return mapper.toDto(user);
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        User user = dao.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("no user with such email"));
+        return mapper.toDto(user);
+    }
+
+    @Override
+    public UserDTO addOAuth2User(UserDTO userDTO) {
+        userDAO.save(mapper.toEntity(userDTO));
+        return null;
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return dao.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("no user with such username"));
     }
 }

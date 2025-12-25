@@ -37,7 +37,7 @@ class AuthManager {
             this.currentUser = { name: 'User', email: 'user@example.com' };
             this.updateUI(true);
 
-            if (!window.location.pathname.includes('auth.html')) {
+            if (!window.location.pathname.includes('authDS.html')) {
                 window.location.href = '/';
             }
         } else {
@@ -196,7 +196,7 @@ class AuthManager {
 
             // Перенаправление на главную страницу
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = 'indexDS.html';
             }, 1000);
         }, 1500);
     }

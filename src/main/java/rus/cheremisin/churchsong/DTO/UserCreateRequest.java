@@ -20,4 +20,5 @@ public class UserCreateRequest {
     AvatarImageDTO userAvatar;
     String email;
     String username;
+    String password;
 }
