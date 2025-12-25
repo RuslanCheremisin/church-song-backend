@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Church song</title>
+</head>
+<body>
+<div>
+    <nav>
+        <form action="/home" method="get">
+            <button type="submit">Домой</button>
+        </form>
+        <p></p>
+    </nav>
+</div>
+<h1>Login or register</h1>
+<h3 id="currentUser">Текущий пользователь</h3>
+<h2 id="loginHeader">Login</h2>
+<div class="container mt-5" id="loginContainer">
+    <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="LOGIN">
+        <input type="text" name="password" placeholder="PASSWORD">
+        <button type="submit">Login</button>
+    </form>
+</div>
+<h2>Register</h2>
+<div>
+    <form action="/auth/local/register" method="post">
+        <input type="text" name="firstName" placeholder="First name">
+        <p></p>
+        <input type="text" name="lastName" placeholder="Last name">
+        <p></p>
+        <input type="text" name="username" placeholder="username">
+        <p></p>
+        <input type="text" name="password" placeholder="password">
+        <p></p>
+        <input type="text" name="email" placeholder="e-mail">
+        <p></p>
+        <button type="submit">Register</button>
+    </form>
+    <p></p>
+    <form action="/logout" method="post" id="logoutElement">
+        <button type="submit">Выход</button>
+    </form>
+</div>
+<h2 id="loginWOtherStuffHeader">Login with other stuff</h2>
+<div class="container mt-5" id="loginWithOtherStuffContainer">
+    <form action="/oauth2/authorization/google" method="POST">
+        <button type="submit">Google</button>
+    </form>
+    <p></p>
+    <form action="/oauth2/authorization/google" method="POST">
+        <button type="submit">Yandex</button>
+    </form>
+    <p></p>
+    <form action="/oauth2/authorization/google" method="POST">
+        <button type="submit">VK ID</button>
+    </form>
+    <p></p>
+    <form action="/oauth2/authorization/google" method="POST">
+        <button type="submit">Apple</button>
+    </form>
+    <p></p>
+</div>
+
+</body>
+<script src="/js/auth.js"></script>
+</html>

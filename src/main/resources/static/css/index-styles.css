@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+html {
+    overflow-y: scroll; /* Скроллбар поверх контента без сдвигов */
+}
 
 body {
     font-family: 'Montserrat', sans-serif;
@@ -75,6 +78,84 @@ body {
 }
 .navbar-brand .logo {
     margin-right: 10px; /* Регулируем расстояние между логотипом и текстом */
+}
+@media (max-width: 768px) {
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1.5rem; /* ← увеличили горизонтальные отступы */
+    }
+}
+.dropdown-menu {
+    min-width: 280px !important;
+    background: rgba(20, 40, 80, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 1rem !important;
+}
+
+.dropdown-menu .dropdown-header {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 0.5rem 1rem !important;
+}
+
+.dropdown-menu .btn {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem !important;
+    border-radius: 5px !important;
+}
+
+.dropdown-menu .btn-primary {
+    background-color: #00A8CC !important;
+    border-color: #00A8CC !important;
+}
+
+.dropdown-menu .btn-outline-primary {
+    color: #00A8CC !important;
+    border-color: #00A8CC !important;
+    background-color: transparent !important;
+}
+
+.dropdown-menu .btn-outline-primary:hover {
+    background-color: rgba(0, 168, 204, 0.1) !important;
+    color: white !important;
+}
+
+.dropdown-menu .text-muted {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 0.8rem;
+    line-height: 1.3;
+}
+
+/* Специфичные стили для кнопок в дропдауне */
+.dropdown-menu .btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+}
+
+.dropdown-menu .btn img {
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 0.5rem !important;
+}
+
+/* Отступы между элементами дропдауна */
+.dropdown-menu li {
+    margin-bottom: 0.5rem !important;
+}
+
+.dropdown-menu li:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Специальный отступ для разделителя */
+.dropdown-menu li.my-3 {
+    margin: 1rem 0 !important;
 }
 
 /* --- Основной контент поверх видео --- */
@@ -169,6 +250,28 @@ body {
     .lead {
         font-size: 1.2rem;
     }
+    .dropdown-menu {
+        position: fixed !important;
+        top: 300px !important;
+        left: 70% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        max-width: 300px !important;
+    }
+    .navbar-nav .nav-link {
+        padding: 0.75rem 1rem; /* ← паддинг в мобильной версии */
+        text-align: left;
+        width: 100%;
+    }
+    .modal-dialog {
+        max-width: 95%; /* ← занимает 95% ширины экрана */
+        margin: 0.5rem auto;
+    }
+
+    .modal-content {
+        width: 100%; /* ← растягивает контент на всю доступную ширину */
+    }
+
 }
 .modal-backdrop {
     z-index: 1040 !important;

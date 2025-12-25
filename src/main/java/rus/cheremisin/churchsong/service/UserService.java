@@ -3,6 +3,7 @@ package rus.cheremisin.churchsong.service;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.Band;
+import rus.cheremisin.churchsong.entity.User;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface UserService {
 
     void addUserToBandAsLeader(Band band, Long leaderId);
 
+    UserDTO getUserByEmail(String email);
+
+    UserDTO addOAuth2User (UserDTO userDTO);
 }

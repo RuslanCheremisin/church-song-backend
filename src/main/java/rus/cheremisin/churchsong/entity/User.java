@@ -6,9 +6,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.*;
 
 @Entity
@@ -17,7 +17,6 @@ import java.util.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User implements UserDetails {
     @Id
@@ -34,7 +33,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id"))
     List<Song> favoriteSongs;
-    @ManyToMany()
+    @ManyToMany
     @JoinTable(
             name = "user_bands",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -49,6 +48,13 @@ public class User implements UserDetails {
 
     String username;
     String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    @JsonIgnore
     Set<Role> roles;
 
     Timestamp createdAt;
@@ -96,7 +102,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -127,12 +133,22 @@ public class User implements UserDetails {
             this.bands.add(newBand);
         }
     }
+
     public void removeBand(Band bandToRemove) {
         if (bands == null || bandToRemove == null) {
             return;
         }
         if (bands.contains(bandToRemove)) {
             this.bands.remove(bandToRemove);
+        }
+    }
+
+    public void addRole(Role role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        if (role != null && !roles.contains(role)) {
+            this.roles.add(role);
         }
     }
 }

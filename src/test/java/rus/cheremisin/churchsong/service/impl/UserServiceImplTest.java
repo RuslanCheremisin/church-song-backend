@@ -90,18 +90,19 @@ class UserServiceImplTest {
                 "Biography article",
                 List.of("balalayka", "flute"),
                 new ArrayList<>(),
+                new ArrayList<>(),
                 new AvatarImageDTO(1L, "http link"),
-                "test@email.test",
                 "username",
-                new HashSet<>(),
-                new ArrayList<>());
+                "test@email.test",
+                new HashSet<>());
 
         userCreateRequest = new UserCreateRequest(
                 "Ivan",
                 "Grozny",
                 new AvatarImageDTO(),
                 "Biography article",
-                "username");
+                "username",
+                "password");
         band = new Band();
         band.setId(1L);
         band.setMembers(new ArrayList<>());

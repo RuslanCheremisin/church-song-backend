@@ -13,6 +13,10 @@ import java.io.StringReader;
 
 public class Utils {
 
+    public static String getRandomDoubleToString() {
+        return Double.toString(Math.random());
+    }
+
     public GeoNamesResponse parseGeoNamesChildrenXML(String xml) throws JAXBException, IOException {
         JAXBContext context = JAXBContext.newInstance(GeoNamesResponse.class);
         return (GeoNamesResponse) context.createUnmarshaller().unmarshal(new StringReader(xml));
@@ -27,4 +31,6 @@ public class Utils {
             throw new RuntimeException(e);
         }
     }
+
+
 }

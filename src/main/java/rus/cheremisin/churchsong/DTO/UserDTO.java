@@ -3,6 +3,7 @@ package rus.cheremisin.churchsong.DTO;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import rus.cheremisin.churchsong.entity.AvatarImage;
+import rus.cheremisin.churchsong.entity.Role;
 
 import java.util.List;
 import java.util.Set;
@@ -22,9 +23,9 @@ public class UserDTO {
     String bio;
     List<String> instruments;
     List<SimpleSongDTO> favoriteSongs;
+    List<SimpleBandDTO> bands;
     AvatarImageDTO userAvatar;
     String email;
     String username;
-    Set<RoleDTO> roles;
-    List<SimpleBandDTO> bands;
+    Set<Role> roles;
 }
