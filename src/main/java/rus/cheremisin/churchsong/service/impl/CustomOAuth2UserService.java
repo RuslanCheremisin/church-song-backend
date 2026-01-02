@@ -34,13 +34,30 @@ public class CustomOAuth2UserService
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+
+
         DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
         Map<String, Object> attributes = oAuth2User.getAttributes();
-        String firstName = (String) attributes.get("given_name");
-        String lastName = (String) attributes.get("family_name");
-        String email = (String) attributes.get("email");
-        String pictureLink = (String) attributes.get("picture");
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+
+        String firstName = "";
+        String lastName = "";
+        String email = "";
+        String pictureLink = "";
+
+        if (registrationId.equals("yandex")) {
+            firstName = (String) attributes.get("first_name");
+            lastName = (String) attributes.get("last_name");
+            email = (String) attributes.get("default_email");
+            pictureLink = (String) attributes.get("default_avatar_id");
+        } else if (registrationId.equals("google")) {
+            firstName = (String) attributes.get("given_name");
+            lastName = (String) attributes.get("family_name");
+            email = (String) attributes.get("email");
+            pictureLink = (String) attributes.get("picture");
+        }
+
         Set<Role> authorities = oAuth2User.getAuthorities().stream().map(ga -> roleService.getRoleByName(ga.getAuthority())).collect(Collectors.toSet());
 
         try {

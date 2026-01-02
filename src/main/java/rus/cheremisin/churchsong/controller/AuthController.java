@@ -35,13 +35,15 @@ public class AuthController {
 
     @GetMapping("/current-user")
     public ResponseEntity<UserDTO> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal OAuth2User oAuth2User) {
-        UserDTO userDTO;
-        if (userDetails != null) {
+        UserDTO userDTO = new UserDTO(-1L, null, null, null, null, null, null, null, null, null, null, null);;
+        if (oAuth2User != null) {
+            if (oAuth2User.getAttribute("email") != null) {
+                userDTO = userService.getUserByEmail(oAuth2User.getAttribute("email"));
+            } else if (oAuth2User.getAttribute("default_email") != null) {
+                userDTO = userService.getUserByEmail(oAuth2User.getAttribute("default_email"));
+            }
+        } else if (userDetails != null) {
             userDTO = userService.getUserByUsername(userDetails.getUsername());
-        } else if (oAuth2User != null) {
-            userDTO = userService.getUserByEmail(oAuth2User.getAttribute("email"));
-        } else {
-            userDTO = new UserDTO(-1L, null, null, null, null, null, null, null, null, null, null, null);
         }
 
         return ResponseEntity.ok(userDTO);
