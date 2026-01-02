@@ -37,9 +37,9 @@ public class AuthController {
     public ResponseEntity<UserDTO> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails, @AuthenticationPrincipal OAuth2User oAuth2User) {
         UserDTO userDTO = new UserDTO(-1L, null, null, null, null, null, null, null, null, null, null, null);;
         if (oAuth2User != null) {
-            if (oAuth2User.getAttribute("email") != null) {
+            if (oAuth2User.getAttribute("email") != null) { //google
                 userDTO = userService.getUserByEmail(oAuth2User.getAttribute("email"));
-            } else if (oAuth2User.getAttribute("default_email") != null) {
+            } else if (oAuth2User.getAttribute("default_email") != null) { //yandex
                 userDTO = userService.getUserByEmail(oAuth2User.getAttribute("default_email"));
             }
         } else if (userDetails != null) {
