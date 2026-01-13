@@ -76,7 +76,7 @@ public class CustomOAuth2UserService
                     email,
                     email,
                     authorities);
-            userService.addOAuth2User(newUser);
+            userService.addOAuth2OrTGUser(newUser);
         }
 
 
