@@ -35,6 +35,7 @@ public class SimpleSecurityConfig {
                                 "/",
                                 "/home",
                                 "/auth",
+                                "/bands",
                                 "/index.html",
                                 "/js/**",
                                 "/auth/current-user",

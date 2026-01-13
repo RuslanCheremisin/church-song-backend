@@ -1,7 +1,18 @@
 let currentUser = null;
+let currentUserBands = [];
+let allBands = [];
+
 document.addEventListener("DOMContentLoaded", function () {
-    displayCurrentUser();
+    initializeUserData();
 })
+
+async function initializeUserData(){
+    await displayCurrentUser();
+    await getCurrentUserBands();
+    renderCurrentUsersBands();
+    await getAllBands();
+    renderAllBands();
+}
 async function apiGet(url) {
     try {
         const headers = {
@@ -94,4 +105,54 @@ function loginWithTelegram() {
             }
         }
     );
+}
+async function getCurrentUserBands() {
+    if(currentUser.id !== -1) {
+        try {
+            currentUserBands = await apiGet(`/bands/by-user/${currentUser.id}`);
+        } catch (error) {
+            console.error('Ошибка при получении групп пользователя:', error);
+            return [];
+        }
+    }
+}
+
+function renderCurrentUsersBands() {
+    if (currentUser) {
+        const currentUserBandsTable = document.getElementById('currentUserBands')
+        if (currentUserBands) {
+            currentUserBands.forEach(band => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${band.id}</td>
+                <td>${band.name}</td>
+            `;
+                currentUserBandsTable.appendChild(row);
+            })
+        }
+    }
+}
+
+async function getAllBands() {
+        try {
+            allBands = await apiGet(`/bands`);
+        } catch (error) {
+            console.error('Ошибка при получении всех групп:', error);
+            return [];
+        }
+}
+function renderAllBands() {
+    if (currentUser) {
+        const allBandsTable = document.getElementById('allBands')
+        if (allBands) {
+            allBands.forEach(band => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${band.id}</td>
+                <td>${band.name}</td>
+            `;
+                allBandsTable.appendChild(row);
+            })
+        }
+    }
 }

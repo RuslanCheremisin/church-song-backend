@@ -21,6 +21,10 @@ public class BandController {
     public ResponseEntity<List<SimpleBandDTO>> getAllBands() {
         return ResponseEntity.ok(bandService.getAllBands());
     }
+    @GetMapping("/by-user/{user-id}")
+    public ResponseEntity<List<SimpleBandDTO>> getUserBands(@PathVariable("user-id") Long userId) {
+        return ResponseEntity.ok(bandService.getUserBands(userId));
+    }
 
     @GetMapping("/{band-id}")
     public ResponseEntity<BandDTO> getBandById(@PathVariable("band-id") Long bandId) {

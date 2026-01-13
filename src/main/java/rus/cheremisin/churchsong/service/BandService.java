@@ -27,4 +27,6 @@ public interface BandService {
     void addSongToBand(Long id, Song song);
 
     void removeSongFromBand(Long bandId, Song song);
+
+    List<SimpleBandDTO> getUserBands(Long userId);
 }

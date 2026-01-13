@@ -24,7 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BandServiceImpl implements BandService {
-    private BandDAO dao;
+    private BandDAO bandsDao;
     private BandMapper bandMapper;
     private UserService userService;
     private UserMapper userMapper;
@@ -33,49 +33,49 @@ public class BandServiceImpl implements BandService {
     @Override
     @Transactional(readOnly = true)
     public List<SimpleBandDTO> getAllBands() {
-        return bandMapper.toDtoList(dao.findAll());
+        return bandMapper.toDtoList(bandsDao.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
     public BandDTO getBandById(Long bandId) {
-        return bandMapper.toDto(dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id")));
+        return bandMapper.toDto(bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id")));
     }
 
     @Override
     public BandDTO createBand(BandDTO dto) {
-        return bandMapper.toDto(dao.save(bandMapper.toEntity(dto)));
+        return bandMapper.toDto(bandsDao.save(bandMapper.toEntity(dto)));
     }
 
     @Override
     public BandDTO patchBand(Long bandId, PatchBandDTO dto) {
-        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         Band updatedBand = bandMapper.mergeToEntity(dto, band);
-        return bandMapper.toDto(dao.save(updatedBand));
+        return bandMapper.toDto(bandsDao.save(updatedBand));
     }
 
     @Override
     public BandDTO changeBandLeader(Long bandId, LeaderChangeRequest request) {
-        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         if (request.getLeaderId() == null) {
             band.setLeader(null);
         } else {
             User leader = userMapper.toEntity(userService.findById(request.getLeaderId()));
             band.setLeader(leader);
         }
-        return bandMapper.toDto(dao.save(band));
+        return bandMapper.toDto(bandsDao.save(band));
     }
 
     @Override
     public BandDTO changeBandAvatar(Long bandId, AvatarImageDTO dto) {
-        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         band.setBandAvatar(imageMapper.toEntity(dto));
-        return bandMapper.toDto(dao.save(band));
+        return bandMapper.toDto(bandsDao.save(band));
     }
 
     @Override
     public BandDTO grantMembershipRequest(Long bandId, GrantMembershipRequest request) {
-        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         User newMember = userMapper.toEntity(userService.findById(request.getNewMemberId()));
         band.addMember(newMember);
         return bandMapper.toDto(userService.addBandToUser(newMember.getId(), band));
@@ -83,28 +83,35 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public BandDTO cancelMembershipRequest(Long bandId, CancelMembershipRequest request) {
-        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         User newMember = userMapper.toEntity(userService.findById(request.getMemberId()));
         band.removeMember(newMember);
-        return bandMapper.toDto(dao.save(band));
+        return bandMapper.toDto(bandsDao.save(band));
     }
 
     @Override
     public void deleteBand(Long bandId) {
-        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
-        dao.delete(band);
+        Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        bandsDao.delete(band);
     }
 
     @Override
     public void addSongToBand(Long bandId, Song song) {
-        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         band.addSong(song);
-        dao.save(band);
+        bandsDao.save(band);
     }
     @Override
     public void removeSongFromBand(Long bandId, Song song) {
-        Band band = dao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
+        Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         band.removeSong(song);
-        dao.save(band);
+        bandsDao.save(band);
+    }
+
+    @Override
+    public List<SimpleBandDTO> getUserBands(Long userId) {
+        UserDTO givenUser = userService.findById(userId);
+        List<User> userList = List.of(userMapper.toEntity(givenUser));
+        return bandMapper.toDtoList(bandsDao.findAllByMembersContaining(userList));
     }
 }

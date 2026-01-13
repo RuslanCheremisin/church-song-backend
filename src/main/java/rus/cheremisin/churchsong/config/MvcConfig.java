@@ -9,6 +9,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("forward:/index.html");
         registry.addViewController("/auth").setViewName("forward:/auth.html");
+        registry.addViewController("/bandspage").setViewName("forward:/bands.html");
 //        registry.addViewController("/logout").setViewName("forward:/logout.html");
     }
 }
