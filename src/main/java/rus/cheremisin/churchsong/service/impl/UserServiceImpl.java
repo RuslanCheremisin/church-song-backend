@@ -34,7 +34,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     UserMapper mapper;
     RoleService roleService;
     PasswordEncoder passwordEncoder;
-    private final UserDAO userDAO;
 
     @Override
     public UserDTO findById(Long id) {
@@ -127,9 +126,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDTO addOAuth2User(UserDTO userDTO) {
-        userDAO.save(mapper.toEntity(userDTO));
-        return null;
+    public UserDTO addOAuth2OrTGUser(UserDTO userDTO) {
+        User user = dao.save(mapper.toEntity(userDTO));
+        return mapper.toDto(user);
     }
 
 

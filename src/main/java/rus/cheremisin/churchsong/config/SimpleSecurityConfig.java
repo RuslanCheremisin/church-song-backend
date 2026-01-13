@@ -44,8 +44,9 @@ public class SimpleSecurityConfig {
                         .permitAll()
                         .requestMatchers(
                                 HttpMethod.POST,
-                                "/auth/oauth2", //удали при мне
+//                                "/auth/oauth2", //удали при мне
                                 "/auth/local/register",
+                                "/auth/telegram",
                                 "/login",
                                 "/logout")
                         .permitAll()

@@ -69,3 +69,29 @@ function toggleLogoutElement() {
         logoutElement.hidden ? logoutElement.hidden = false : logoutElement.hidden = true;
     }
 }
+
+function loginWithTelegram() {
+    window.Telegram.Login.auth(
+        {
+            bot_id: "ChurchSong_bot",
+            request_access: true
+        },
+        async (user) => {
+            if (!user) {
+                console.error("Telegram auth failed");
+                return;
+            }
+
+            const response = await fetch('/auth/telegram', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include',
+                body: JSON.stringify(user)
+            });
+
+            if (response.ok) {
+                await displayCurrentUser();
+            }
+        }
+    );
+}
