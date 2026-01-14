@@ -1,9 +1,14 @@
 let currentUser = null;
 let currentUserBands = [];
 let allBands = [];
+let bandById = null;
 
 document.addEventListener("DOMContentLoaded", function () {
     initializeUserData();
+    const currentBandId = sessionStorage.getItem("currentBandId");
+    if(currentBandId) {
+        getBandById(currentBandId);
+    }
 })
 
 async function initializeUserData(){
@@ -125,7 +130,7 @@ function renderCurrentUsersBands() {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                 <td>${band.id}</td>
-                <td>${band.name}</td>
+                <td><a href="/bands/byId/${band.id}" onclick="saveBandId(${band.id})">${band.name}<a/></td>
             `;
                 currentUserBandsTable.appendChild(row);
             })
@@ -149,7 +154,7 @@ function renderAllBands() {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                 <td>${band.id}</td>
-                <td>${band.name}</td>
+                <td><a href="/bands/byId/${band.id}" onclick="saveBandId(${band.id})">${band.name}<a/></td>
             `;
                 allBandsTable.appendChild(row);
             })
@@ -180,7 +185,7 @@ async function handleCreateBand() {
                 body: JSON.stringify(formData)
             });
 
-            if( response.ok) {
+            if (response.ok) {
                 alert('Группа добавлена!');
                 document.getElementById('name').value = '';
                 document.getElementById('email').value = '';
@@ -192,5 +197,29 @@ async function handleCreateBand() {
         } catch (error) {
             console.error('Ошибка:', error);
         }
+    }
+}
+
+function saveBandId(bandId) {
+    sessionStorage.setItem('currentBandId', bandId);
+}
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     const currentBandId = sessionStorage.getItem("currentBndId");
+//     if(currentBandId) {
+//         getBandById(currentBandId);
+//     }
+// });
+
+async function getBandById(bandId) {
+    try {
+        bandById = await apiGet(`/bands/${bandId}`);
+    } catch (error) {
+        alert("error getting bandById. " + error.value)
+    }
+    if (bandById) {
+        document.getElementById('bandName').innerHTML = bandById.name;
+        document.getElementById('bandBio').innerHTML = bandById.bio;
+        document.getElementById('bandLeader').innerHTML = bandById.leader.firstName;
     }
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Группы</title>
+</head>
+<body>
+<h1>Группы</h1>
+<h3 id="currentUser">Текущий пользователь</h3>
+    <div>
+        <nav>
+            <form action="/home" method="get">
+                <button type="submit">Домой</button>
+            </form>
+            <p></p>
+            <div id="loginButton">
+                <form action="/auth" method="get">
+                    <button type="submit">Вход</button>
+                </form>
+                <p></p>
+            </div>
+            <div id="bandsButton">
+                <form action="/bandspage" method="get">
+                    <button type="submit">Группы</button>
+                </form>
+                <p></p>
+            </div>
+            <form action="/auth" method="get">
+                <button type="submit">Регистрация</button>
+            </form>
+            <p></p>
+            <form action="/logout" method="post" id="logoutElement">
+                <button type="submit">Выход</button>
+            </form>
+        </nav>
+    </div>
+<div>
+    <h2 id="bandName" name="Название">Загрузка...</h2>
+    <p></p>
+    <p id="bandBio" name="Биография"></p>
+    <p></p>
+    <p id="bandLeader" name="Лидер"></p>
+</div>
+<div>
+    <table id="currentUserBands">
+        <tr>
+            <th>Ваши группы</th>
+        </tr>
+    </table>
+    <form action="/bandspage/add" method="get">
+        <button type="submit">Добавить группу</button>
+    </form>
+    <p></p>
+</div>
+</body>
+<!--<script src="/js/bands.js"></script>-->
+<script src="/js/auth.js"></script>
+</html>

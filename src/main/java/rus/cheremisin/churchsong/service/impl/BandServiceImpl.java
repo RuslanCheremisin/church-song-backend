@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.BandDAO;
@@ -24,6 +25,7 @@ import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -123,6 +125,7 @@ public class BandServiceImpl implements BandService {
         band.addSong(song);
         bandsDao.save(band);
     }
+
     @Override
     public void removeSongFromBand(Long bandId, Song song) {
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
@@ -139,8 +142,23 @@ public class BandServiceImpl implements BandService {
 
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getPrincipal() instanceof UserDetails) {
-            return (User) auth.getPrincipal();
+        if (auth != null) {
+            if (auth.getPrincipal() instanceof UserDetails) {
+                return (User) auth.getPrincipal();
+            } else if (auth.getPrincipal() instanceof OAuth2User) {
+                String username = "";
+                Map<String, Object> attributes = ((OAuth2User) auth.getPrincipal()).getAttributes();
+                if (attributes.containsKey("default_email")) {
+                    username = (String) attributes.get("default_email");
+                } else if (attributes.containsKey("email")) {
+                    username = (String) attributes.get("email");
+                }
+                UserDTO dto = userService.getUserByUsername(username);
+                return userMapper.toEntity(dto);
+
+            } else {
+                throw new NullPointerException("current principal is null");
+            }
         } else {
             throw new RuntimeException("there are no authenticated user");
         }
