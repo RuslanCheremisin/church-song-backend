@@ -82,29 +82,29 @@ function toggleLogoutElement() {
 }
 
 function loginWithTelegram() {
-    window.Telegram.Login.auth(
-        {
-            bot_id: "ChurchSong_bot",
-            request_access: true
-        },
-        async (user) => {
-            if (!user) {
-                console.error("Telegram auth failed");
-                return;
-            }
-
-            const response = await fetch('/auth/telegram', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                credentials: 'include',
-                body: JSON.stringify(user)
-            });
-
-            if (response.ok) {
-                await displayCurrentUser();
-            }
-        }
-    );
+    // window.Telegram.Login.auth(
+    //     {
+    //         bot_id: "ChurchSong_bot",
+    //         request_access: true
+    //     },
+    //     async (user) => {
+    //         if (!user) {
+    //             console.error("Telegram auth failed");
+    //             return;
+    //         }
+    //
+    //         const response = await fetch('/auth/telegram', {
+    //             method: 'POST',
+    //             headers: {'Content-Type': 'application/json'},
+    //             credentials: 'include',
+    //             body: JSON.stringify(user)
+    //         });
+    //
+    //         if (response.ok) {
+    //             await displayCurrentUser();
+    //         }
+    //     }
+    // );
 }
 async function getCurrentUserBands() {
     if(currentUser.id !== -1) {
@@ -153,6 +153,44 @@ function renderAllBands() {
             `;
                 allBandsTable.appendChild(row);
             })
+        }
+    }
+}
+
+async function handleCreateBand() {
+    if (currentUser) {
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const contactPhone = document.getElementById('contactPhone');
+        const bio = document.getElementById('bio');
+
+        const formData = {
+            name: name.value,
+            email: email.value,
+            contactPhone: contactPhone.value,
+            bio: bio.value,
+        };
+
+        try {
+            const response = await fetch('/bands', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if( response.ok) {
+                alert('Группа добавлена!');
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('contactPhone').value = '';
+                document.getElementById('bio').value = '';
+            } else {
+                alert('Группа не добавлена! Проверьте логи');
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
         }
     }
 }

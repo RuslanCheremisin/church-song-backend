@@ -10,7 +10,7 @@ public interface BandService {
 
     BandDTO getBandById(Long bandId);
 
-    BandDTO createBand(BandDTO dto);
+    BandDTO createBand(BandCreateRequest request);
 
     BandDTO patchBand(Long bandId, PatchBandDTO dto);
 

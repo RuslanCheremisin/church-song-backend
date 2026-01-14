@@ -1,9 +1,14 @@
 package rus.cheremisin.churchsong.service.impl;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.BandDAO;
@@ -17,6 +22,7 @@ import rus.cheremisin.churchsong.mapper.UserMapper;
 import rus.cheremisin.churchsong.service.BandService;
 import rus.cheremisin.churchsong.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,11 +30,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BandServiceImpl implements BandService {
-    private BandDAO bandsDao;
-    private BandMapper bandMapper;
-    private UserService userService;
-    private UserMapper userMapper;
-    private AvatarImageMapper imageMapper;
+    BandDAO bandsDao;
+    BandMapper bandMapper;
+    UserService userService;
+    UserMapper userMapper;
+    AvatarImageMapper imageMapper;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Override
     @Transactional(readOnly = true)
@@ -43,8 +51,22 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public BandDTO createBand(BandDTO dto) {
-        return bandMapper.toDto(bandsDao.save(bandMapper.toEntity(dto)));
+    public BandDTO createBand(BandCreateRequest request) {
+        User creatorUser = getCurrentUser();
+        User managedUser = entityManager.merge(creatorUser);
+        Band newBand = new Band(
+                null,
+                request.getName(),
+                managedUser,
+                request.getEmail(),
+                request.getContactPhone(),
+                null,
+                request.getBio(),
+                new ArrayList<>(),
+                new ArrayList<>());
+        Band savedBand = bandsDao.save(newBand);
+        userService.addBandToUser(getCurrentUser().getId(), newBand);
+        return bandMapper.toDto(savedBand);
     }
 
     @Override
@@ -113,5 +135,14 @@ public class BandServiceImpl implements BandService {
         UserDTO givenUser = userService.findById(userId);
         List<User> userList = List.of(userMapper.toEntity(givenUser));
         return bandMapper.toDtoList(bandsDao.findAllByMembersContaining(userList));
+    }
+
+    private User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() instanceof UserDetails) {
+            return (User) auth.getPrincipal();
+        } else {
+            throw new RuntimeException("there are no authenticated user");
+        }
     }
 }

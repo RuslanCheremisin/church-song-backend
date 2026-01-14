@@ -32,8 +32,10 @@ public class BandController {
     }
 
     @PostMapping
-    public ResponseEntity<BandDTO> createBand(@RequestBody BandDTO dto) {
-        return ResponseEntity.ok(bandService.createBand(dto));
+    public ResponseEntity<BandDTO> createBand(
+            @RequestBody
+            BandCreateRequest request) {
+        return ResponseEntity.ok(bandService.createBand(request));
     }
 
     @PatchMapping("/{band-id}")

@@ -5,7 +5,7 @@
     <title>Группы</title>
 </head>
 <body>
-<h1>Группы</h1>
+<h1>Добавление группы</h1>
 <h3 id="currentUser">Текущий пользователь</h3>
     <div>
         <nav>
@@ -34,23 +34,21 @@
             </form>
         </nav>
     </div>
+<h2>Добавить группу</h2>
 <div>
-    <table id="currentUserBands">
-        <tr>
-            <th>Ваши группы</th>
-        </tr>
-    </table>
-    <form action="/bandspage/add" method="get">
-        <button type="submit">Добавить группу</button>
+    <form action="/bands" method="post">
+        <input type="text" id="name" name="Название" placeholder="Название группы">
+        <p></p>
+        <input type="text" id="email" name="email" placeholder="e-mail">
+        <p></p>
+        <input type="text"  id="contactPhone" name="Телефон" placeholder="+7 999 99 99 990">
+        <p></p>
+        <input type="text" id="bio" name="О группе" placeholder="Привет! Мы новая группа">
+        <p></p>
+        <button type="button" onclick="handleCreateBand()">Добавить</button>
     </form>
     <p></p>
-</div>
-<div>
-    <table id="allBands">
-        <tr>
-            <th>Все группы</th>
-        </tr>
-    </table>
+
 </div>
 </body>
 <!--<script src="/js/bands.js"></script>-->
