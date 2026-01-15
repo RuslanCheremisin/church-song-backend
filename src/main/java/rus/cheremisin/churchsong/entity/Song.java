@@ -26,7 +26,7 @@ public class Song {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "orig_recording_id")
     OriginalRecording origRec;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "song", cascade = CascadeType.ALL, orphanRemoval = true)
     List<SongPart> songParts;
     @ManyToOne
     Band band;
