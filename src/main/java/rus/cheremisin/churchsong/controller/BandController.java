@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import rus.cheremisin.churchsong.DTO.*;
 import rus.cheremisin.churchsong.service.BandService;
 
@@ -33,8 +34,18 @@ public class BandController {
 
     @PostMapping
     public ResponseEntity<BandDTO> createBand(
-            @RequestBody
-            BandCreateRequest request) {
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "contactPhone", required = false) String contactPhone,
+            @RequestParam(value = "bio", required = false) String bio,
+            @RequestParam(value = "photoFile", required = false) MultipartFile photoFile) {
+
+        BandCreateRequest request = new BandCreateRequest();
+        request.setName(name);
+        request.setEmail(email);
+        request.setContactPhone(contactPhone);
+        request.setBio(bio);
+        request.setPhotoFile(photoFile);
         return ResponseEntity.ok(bandService.createBand(request));
     }
 

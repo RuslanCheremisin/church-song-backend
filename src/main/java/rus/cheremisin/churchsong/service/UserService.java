@@ -3,6 +3,7 @@ package rus.cheremisin.churchsong.service;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.Band;
+import rus.cheremisin.churchsong.entity.User;
 
 import java.util.List;
 
@@ -28,4 +29,6 @@ public interface UserService {
     UserDTO getUserByEmail(String email);
 
     UserDTO addOAuth2OrTGUser(UserDTO userDTO);
+
+    User getCurrentUser();
 }

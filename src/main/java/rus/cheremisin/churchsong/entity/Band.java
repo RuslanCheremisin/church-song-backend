@@ -26,7 +26,7 @@ public class Band {
     User leader;
     String email;
     String contactPhone;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "avatar_image_id")
     AvatarImage bandAvatar;
     String bio;

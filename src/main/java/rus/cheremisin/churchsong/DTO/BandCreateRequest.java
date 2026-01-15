@@ -2,6 +2,7 @@ package rus.cheremisin.churchsong.DTO;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,4 +16,5 @@ public class BandCreateRequest {
     String email;
     String contactPhone;
     String bio;
+    MultipartFile photoFile;
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.BandDAO;
 import rus.cheremisin.churchsong.DTO.*;
+import rus.cheremisin.churchsong.entity.AvatarImage;
 import rus.cheremisin.churchsong.entity.Band;
 import rus.cheremisin.churchsong.entity.Song;
 import rus.cheremisin.churchsong.entity.User;
@@ -21,6 +22,7 @@ import rus.cheremisin.churchsong.mapper.AvatarImageMapper;
 import rus.cheremisin.churchsong.mapper.BandMapper;
 import rus.cheremisin.churchsong.mapper.UserMapper;
 import rus.cheremisin.churchsong.service.BandService;
+import rus.cheremisin.churchsong.service.ImageService;
 import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class BandServiceImpl implements BandService {
     AvatarImageMapper imageMapper;
     @PersistenceContext
     EntityManager entityManager;
+    private final ImageService imageService;
 
     @Override
     @Transactional(readOnly = true)
@@ -53,21 +56,25 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
+    @Transactional
     public BandDTO createBand(BandCreateRequest request) {
-        User creatorUser = getCurrentUser();
+        User creatorUser = userService.getCurrentUser();
         User managedUser = entityManager.merge(creatorUser);
+
+        AvatarImageDTO avatarImageDTO = imageService.uploadAvatarImage(request.getPhotoFile());
+        AvatarImage avatarImage = entityManager.getReference(AvatarImage.class, avatarImageDTO.getId());
         Band newBand = new Band(
                 null,
                 request.getName(),
                 managedUser,
                 request.getEmail(),
                 request.getContactPhone(),
-                null,
+                avatarImage,
                 request.getBio(),
                 new ArrayList<>(),
                 new ArrayList<>());
         Band savedBand = bandsDao.save(newBand);
-        userService.addBandToUser(getCurrentUser().getId(), newBand);
+        userService.addBandToUser(userService.getCurrentUser().getId(), newBand);
         return bandMapper.toDto(savedBand);
     }
 
@@ -140,27 +147,5 @@ public class BandServiceImpl implements BandService {
         return bandMapper.toDtoList(bandsDao.findAllByMembersContaining(userList));
     }
 
-    private User getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            if (auth.getPrincipal() instanceof UserDetails) {
-                return (User) auth.getPrincipal();
-            } else if (auth.getPrincipal() instanceof OAuth2User) {
-                String username = "";
-                Map<String, Object> attributes = ((OAuth2User) auth.getPrincipal()).getAttributes();
-                if (attributes.containsKey("default_email")) {
-                    username = (String) attributes.get("default_email");
-                } else if (attributes.containsKey("email")) {
-                    username = (String) attributes.get("email");
-                }
-                UserDTO dto = userService.getUserByUsername(username);
-                return userMapper.toEntity(dto);
 
-            } else {
-                throw new NullPointerException("current principal is null");
-            }
-        } else {
-            throw new RuntimeException("there are no authenticated user");
-        }
-    }
 }

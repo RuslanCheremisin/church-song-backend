@@ -164,25 +164,30 @@ function renderAllBands() {
 
 async function handleCreateBand() {
     if (currentUser) {
-        const name = document.getElementById('name');
-        const email = document.getElementById('email');
-        const contactPhone = document.getElementById('contactPhone');
-        const bio = document.getElementById('bio');
+        const photoFile = document.getElementById('photo');
 
-        const formData = {
-            name: name.value,
-            email: email.value,
-            contactPhone: contactPhone.value,
-            bio: bio.value,
-        };
+        const formData = new FormData();
+        formData.append('name', document.getElementById('name').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('contactPhone', document.getElementById('contactPhone').value);
+        formData.append('bio', document.getElementById('bio').value);
+
+        if (photoFile.files.length > 0) {
+            formData.append('photoFile', photoFile.files[0])
+        }
+
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
 
         try {
             const response = await fetch('/bands', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                // body: JSON.stringify(formData)
+                body: formData
             });
 
             if (response.ok) {
@@ -191,6 +196,7 @@ async function handleCreateBand() {
                 document.getElementById('email').value = '';
                 document.getElementById('contactPhone').value = '';
                 document.getElementById('bio').value = '';
+                document.getElementById('photoFile').value = '';
             } else {
                 alert('Группа не добавлена! Проверьте логи');
             }
@@ -221,5 +227,8 @@ async function getBandById(bandId) {
         document.getElementById('bandName').innerHTML = bandById.name;
         document.getElementById('bandBio').innerHTML = bandById.bio;
         document.getElementById('bandLeader').innerHTML = bandById.leader.firstName;
+        document.getElementById('bandPhoto').src = bandById.bandAvatar.link;
     }
 }
+
+
