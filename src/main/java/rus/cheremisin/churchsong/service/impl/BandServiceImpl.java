@@ -38,10 +38,10 @@ public class BandServiceImpl implements BandService {
     BandMapper bandMapper;
     UserService userService;
     UserMapper userMapper;
-    AvatarImageMapper imageMapper;
     @PersistenceContext
     EntityManager entityManager;
-    private final ImageService imageService;
+    ImageService imageService;
+    AvatarImageMapper imageMapper;
 
     @Override
     @Transactional(readOnly = true)

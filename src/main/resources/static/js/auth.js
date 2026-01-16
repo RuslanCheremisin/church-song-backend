@@ -6,18 +6,19 @@ let bandById = null;
 document.addEventListener("DOMContentLoaded", function () {
     initializeUserData();
     const currentBandId = sessionStorage.getItem("currentBandId");
-    if(currentBandId) {
+    if (currentBandId) {
         getBandById(currentBandId);
     }
 })
 
-async function initializeUserData(){
+async function initializeUserData() {
     await displayCurrentUser();
     await getCurrentUserBands();
     renderCurrentUsersBands();
     await getAllBands();
     renderAllBands();
 }
+
 async function apiGet(url) {
     try {
         const headers = {
@@ -28,7 +29,7 @@ async function apiGet(url) {
             credentials: 'include', // Важно для отправки cookies
         });
 
-        if(!response.ok) {
+        if (!response.ok) {
             const error = new Error(`HTTP error! status: ${response.status}`)
             throw error;
         }
@@ -50,6 +51,7 @@ async function displayCurrentUser() {
         currentUserField.innerHTML = 'войдите или зарегистрируйтесь'
     } else {
         currentUserField.innerHTML = currentUser.firstName + " " + currentUser.lastName;
+        document.getElementById('userPhoto').src = currentUser.userAvatar.link;
         hideLoginElements();
     }
 
@@ -79,6 +81,7 @@ function hideLoginElements() {
     toggleLogoutElement();
 
 }
+
 function toggleLogoutElement() {
     const logoutElement = document.getElementById("logoutElement")
     if (logoutElement != null) {
@@ -111,8 +114,9 @@ function loginWithTelegram() {
     //     }
     // );
 }
+
 async function getCurrentUserBands() {
-    if(currentUser.id !== -1) {
+    if (currentUser.id !== -1) {
         try {
             currentUserBands = await apiGet(`/bands/by-user/${currentUser.id}`);
         } catch (error) {
@@ -139,13 +143,14 @@ function renderCurrentUsersBands() {
 }
 
 async function getAllBands() {
-        try {
-            allBands = await apiGet(`/bands`);
-        } catch (error) {
-            console.error('Ошибка при получении всех групп:', error);
-            return [];
-        }
+    try {
+        allBands = await apiGet(`/bands`);
+    } catch (error) {
+        console.error('Ошибка при получении всех групп:', error);
+        return [];
+    }
 }
+
 function renderAllBands() {
     if (currentUser) {
         const allBandsTable = document.getElementById('allBands')
@@ -183,10 +188,6 @@ async function handleCreateBand() {
         try {
             const response = await fetch('/bands', {
                 method: 'POST',
-                // headers: {
-                //     'Content-Type': 'application/json',
-                // },
-                // body: JSON.stringify(formData)
                 body: formData
             });
 
@@ -210,13 +211,6 @@ function saveBandId(bandId) {
     sessionStorage.setItem('currentBandId', bandId);
 }
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     const currentBandId = sessionStorage.getItem("currentBndId");
-//     if(currentBandId) {
-//         getBandById(currentBandId);
-//     }
-// });
-
 async function getBandById(bandId) {
     try {
         bandById = await apiGet(`/bands/${bandId}`);
@@ -228,6 +222,41 @@ async function getBandById(bandId) {
         document.getElementById('bandBio').innerHTML = bandById.bio;
         document.getElementById('bandLeader').innerHTML = bandById.leader.firstName;
         document.getElementById('bandPhoto').src = bandById.bandAvatar.link;
+    }
+}
+
+async function handleRegisterUser() {
+    const photoFile = document.getElementById('photo');
+
+    const formData = new FormData();
+    formData.append('firstName', document.getElementById('firstName').value);
+    formData.append('lastName', document.getElementById('lastName').value);
+    formData.append('email', document.getElementById('email').value);
+    formData.append('username', document.getElementById('username').value);
+    formData.append('password', document.getElementById('password').value);
+
+    if (photoFile.files.length > 0) {
+        formData.append('photoFile', photoFile.files[0])
+    }
+    try {
+        const response = await fetch('/auth/local/register', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            alert('Пользователь добавлен!');
+            document.getElementById('firstName').value = '';
+            document.getElementById('lastName').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('photo').value = '';
+        } else {
+            alert('Пользователь не добавлен! Проверьте логи');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
     }
 }
 

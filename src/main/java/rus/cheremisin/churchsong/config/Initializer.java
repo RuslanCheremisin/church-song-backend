@@ -22,7 +22,7 @@ public class Initializer {
                     null,
                     Utils.getRandomDoubleToString(),
                     Utils.getRandomDoubleToString(),
-                    "password"
+                    null
             ));
         }
     }

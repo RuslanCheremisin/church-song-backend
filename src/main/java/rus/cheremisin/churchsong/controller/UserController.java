@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.service.UserService;
@@ -29,7 +30,21 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserCreateRequest request) {
+    public ResponseEntity<UserDTO> createUser(@RequestParam(value = "firstName") String firstName,
+                                              @RequestParam(value = "lastName") String lastName,
+                                              @RequestParam(value = "email") String email,
+                                              @RequestParam(value = "username") String username,
+                                              @RequestParam(value = "password") String password,
+                                              @RequestParam(value = "photoFile", required = false) MultipartFile photoFile) {
+
+        UserCreateRequest request = new UserCreateRequest(
+                firstName,
+                lastName,
+                email,
+                username,
+                password,
+                photoFile);
+
         return ResponseEntity.ok(userService.addUser(request));
     }
 

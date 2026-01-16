@@ -40,7 +40,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "band_id"))
     @JsonIgnore
     List<Band> bands;
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinColumn(name = "avatar_image_id")
     AvatarImage userAvatar;
 

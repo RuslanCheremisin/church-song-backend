@@ -2,6 +2,7 @@ package rus.cheremisin.churchsong.DTO;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 import rus.cheremisin.churchsong.entity.AvatarImage;
 
 import java.util.List;
@@ -17,8 +18,8 @@ import java.util.Set;
 public class UserCreateRequest {
     String firstName;
     String lastName;
-    AvatarImageDTO userAvatar;
     String email;
     String username;
     String password;
+    MultipartFile photoFile;
 }

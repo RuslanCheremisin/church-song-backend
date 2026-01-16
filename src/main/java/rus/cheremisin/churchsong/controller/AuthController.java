@@ -7,6 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.service.UserService;
@@ -23,9 +24,21 @@ public class AuthController {
     }
 
     @PostMapping(value = "/local/register")
-    public ResponseEntity<UserDTO> localRegister(
-//            @RequestBody
-            UserCreateRequest request) {
+    public ResponseEntity<UserDTO> registerUser(@RequestParam(value = "firstName") String firstName,
+                                              @RequestParam(value = "lastName") String lastName,
+                                              @RequestParam(value = "email") String email,
+                                              @RequestParam(value = "username") String username,
+                                              @RequestParam(value = "password") String password,
+                                              @RequestParam(value = "photoFile", required = false) MultipartFile photoFile) {
+
+        UserCreateRequest request = new UserCreateRequest(
+                firstName,
+                lastName,
+                email,
+                username,
+                password,
+                photoFile);
+
         return ResponseEntity.ok(userService.addUser(request));
     }
 

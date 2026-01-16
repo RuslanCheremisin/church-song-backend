@@ -1,6 +1,8 @@
 package rus.cheremisin.churchsong.service.impl;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -14,12 +16,16 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.UserDAO;
+import rus.cheremisin.churchsong.DTO.AvatarImageDTO;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
+import rus.cheremisin.churchsong.entity.AvatarImage;
 import rus.cheremisin.churchsong.entity.Band;
 import rus.cheremisin.churchsong.entity.User;
 import rus.cheremisin.churchsong.exceptions.UserIsNotInTheBandException;
+import rus.cheremisin.churchsong.mapper.AvatarImageMapper;
 import rus.cheremisin.churchsong.mapper.UserMapper;
+import rus.cheremisin.churchsong.service.ImageService;
 import rus.cheremisin.churchsong.service.RoleService;
 import rus.cheremisin.churchsong.service.UserService;
 
@@ -37,6 +43,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     UserMapper mapper;
     RoleService roleService;
     PasswordEncoder passwordEncoder;
+
+    @PersistenceContext
+    EntityManager entityManager;
+    ImageService imageService;
+    AvatarImageMapper imageMapper;
 
     @Override
     public UserDTO findById(Long id) {
@@ -75,8 +86,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDTO addUser(UserCreateRequest request) {
-        User user = mapper.fromCreateRequestToEntity(request);
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        AvatarImageDTO avatarImageDTO = imageService.uploadAvatarImage(request.getPhotoFile());
+        AvatarImage avatarImage = entityManager.getReference(AvatarImage.class, avatarImageDTO.getId());
+
+        User user = new User(
+                null,
+                request.getFirstName(),
+                request.getLastName(),
+                null,
+                null,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                avatarImage,
+                request.getEmail(),
+                request.getUsername(),
+                passwordEncoder.encode(request.getPassword()),
+                null);
         user.addRole(roleService.getRoleByName("USER"));
         return mapper.toDto(dao.save(user));
     }
