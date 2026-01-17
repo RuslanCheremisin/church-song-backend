@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @PersistenceContext
     EntityManager entityManager;
     ImageService imageService;
-    AvatarImageMapper imageMapper;
 
     @Override
     public UserDTO findById(Long id) {

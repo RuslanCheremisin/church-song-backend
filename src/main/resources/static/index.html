@@ -7,34 +7,37 @@
 <body>
 <h1>Главная страница</h1>
 <h3 id="currentUser">Текущий пользователь</h3>
-<img id=userPhoto src="" alt="фото пользователя">
-    <div>
-        <nav>
-            <form action="/home" method="get">
-                <button type="submit">Домой</button>
-            </form>
-            <p></p>
-            <div id="loginButton">
-                <form action="/auth" method="get">
-                    <button type="submit">Вход</button>
-                </form>
-                <p></p>
-            </div>
-            <div id="bandsButton">
-                <form action="/bandspage" method="get">
-                    <button type="submit">Группы</button>
-                </form>
-                <p></p>
-            </div>
+<div class="photo">
+    <img id=userPhoto src="" alt="фото пользователя">
+</div>
+<div>
+    <nav>
+        <form action="/home" method="get">
+            <button type="submit">Домой</button>
+        </form>
+        <p></p>
+        <div id="loginButton">
             <form action="/auth" method="get">
-                <button type="submit">Регистрация</button>
+                <button type="submit">Вход</button>
             </form>
             <p></p>
-            <form action="/logout" method="post" id="logoutElement">
-                <button type="submit">Выход</button>
+        </div>
+        <div id="bandsButton">
+            <form action="/bandspage" method="get">
+                <button type="submit">Группы</button>
             </form>
-        </nav>
-    </div>
+            <p></p>
+        </div>
+        <form action="/auth" method="get">
+            <button type="submit">Регистрация</button>
+        </form>
+        <p></p>
+        <form action="/logout" method="post" id="logoutElement">
+            <button type="submit">Выход</button>
+        </form>
+    </nav>
+</div>
 </body>
 <script src="/js/auth.js"></script>
+<link rel="stylesheet" href="css/styles.css">
 </html>
