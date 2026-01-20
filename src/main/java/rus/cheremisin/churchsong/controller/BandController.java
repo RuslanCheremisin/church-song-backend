@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rus.cheremisin.churchsong.DTO.*;
 import rus.cheremisin.churchsong.service.BandService;
+import rus.cheremisin.churchsong.service.ImageService;
+import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.List;
 
@@ -16,7 +18,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/bands")
 public class BandController {
-    private BandService bandService;
+    BandService bandService;
+    ImageService imageService;
 
     @GetMapping
     public ResponseEntity<List<SimpleBandDTO>> getAllBands() {
@@ -59,8 +62,10 @@ public class BandController {
         return ResponseEntity.ok(bandService.changeBandLeader(bandId, request));
     }
 
-    @PatchMapping("/{band-id}/avatar")
-    public ResponseEntity<BandDTO> changeBandAvatar(@PathVariable("band-id") Long bandId, @RequestBody AvatarImageDTO dto) {
+    @PostMapping("/{band-id}/avatar")
+    public ResponseEntity<BandDTO> changeBandAvatar(@PathVariable("band-id") Long bandId,
+                                                    @RequestParam(value = "photoFile") MultipartFile photoFile) {
+        AvatarImageDTO dto = imageService.uploadAvatarImage(photoFile);
         return ResponseEntity.ok(bandService.changeBandAvatar(bandId, dto));
     }
 

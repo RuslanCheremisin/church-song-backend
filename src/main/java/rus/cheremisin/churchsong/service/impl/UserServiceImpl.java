@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.UserDAO;
 import rus.cheremisin.churchsong.DTO.AvatarImageDTO;
+import rus.cheremisin.churchsong.DTO.BandDTO;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.AvatarImage;
@@ -47,6 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @PersistenceContext
     EntityManager entityManager;
     ImageService imageService;
+    AvatarImageMapper imageMapper;
 
     @Override
     public UserDTO findById(Long id) {
@@ -166,7 +168,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getCurrentUser() {
+    public User getCurrentAuthUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             if (auth.getPrincipal() instanceof UserDetails) {
@@ -188,5 +190,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             throw new RuntimeException("there are no authenticated user");
         }
+    }
+
+    @Override
+    public UserDTO changeUserAvatar(Long userId, AvatarImageDTO dto) {
+        User user = dao.findById(userId).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
+        user.setUserAvatar(imageMapper.toEntity(dto));
+        return mapper.toDto(dao.save(user));
     }
 }

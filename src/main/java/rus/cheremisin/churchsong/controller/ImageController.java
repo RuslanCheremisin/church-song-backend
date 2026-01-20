@@ -20,7 +20,7 @@ public class ImageController {
     private final ImageService imageService;
 
     @GetMapping("/{image-id}")
-    public ResponseEntity<AvatarImageDTO> getBandById(@PathVariable("image-id") Long bandId) {
+    public ResponseEntity<AvatarImageDTO> getAvatarImageById(@PathVariable("image-id") Long bandId) {
         return ResponseEntity.ok(imageService.getAvatarImageById(bandId));
     }
 }

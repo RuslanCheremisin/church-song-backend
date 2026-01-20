@@ -6,8 +6,11 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import rus.cheremisin.churchsong.DTO.AvatarImageDTO;
+import rus.cheremisin.churchsong.DTO.BandDTO;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
+import rus.cheremisin.churchsong.service.ImageService;
 import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     UserService userService;
+    ImageService imageService;
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -58,8 +62,18 @@ public class UserController {
         userService.removeBandFromUser(userId, bandId);
         return ResponseEntity.ok().build();
     }
+
     @DeleteMapping("/{user-id}")
     public ResponseEntity<?> deleteBand(@PathVariable("user-id") Long userId) {
-       userService.deleteUser(userId);
+        userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
-    }}
+    }
+    @PatchMapping("/{user-id}/avatar")
+    public ResponseEntity<UserDTO> changeUserAvatar(@PathVariable("user-id") Long userId,
+                                                    @RequestParam(value = "photoFile") MultipartFile photoFile) {
+        AvatarImageDTO dto = imageService.uploadAvatarImage(photoFile);
+        return ResponseEntity.ok(userService.changeUserAvatar(userId, dto));
+    }
+}
+
+

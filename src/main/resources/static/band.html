@@ -37,6 +37,10 @@
     </div>
 <div>
     <img id=bandPhoto src="" alt="фото группы">
+    <form action="/bands/{bandId}/avatar" method="post">
+        <input type="file" id="newBandPhoto" name="Фото" accept="image/*" >
+        <button type="button" id="changeBandPhoto" onclick="handleChangeAvatar('band')">Изменить фото группы</button>
+    </form>
     <h2 id="bandName" name="Название">Загрузка...</h2>
     <p>Биография группы</p>
     <p id="bandBio" name="Биография"></p>

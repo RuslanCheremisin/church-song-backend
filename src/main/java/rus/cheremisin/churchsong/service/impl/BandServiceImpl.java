@@ -18,6 +18,7 @@ import rus.cheremisin.churchsong.entity.AvatarImage;
 import rus.cheremisin.churchsong.entity.Band;
 import rus.cheremisin.churchsong.entity.Song;
 import rus.cheremisin.churchsong.entity.User;
+import rus.cheremisin.churchsong.exceptions.CurrentUserIsNotTheLeaderOfTheBandException;
 import rus.cheremisin.churchsong.mapper.AvatarImageMapper;
 import rus.cheremisin.churchsong.mapper.BandMapper;
 import rus.cheremisin.churchsong.mapper.UserMapper;
@@ -28,6 +29,7 @@ import rus.cheremisin.churchsong.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -58,7 +60,7 @@ public class BandServiceImpl implements BandService {
     @Override
     @Transactional
     public BandDTO createBand(BandCreateRequest request) {
-        User creatorUser = userService.getCurrentUser();
+        User creatorUser = userService.getCurrentAuthUser();
         User managedUser = entityManager.merge(creatorUser);
 
         AvatarImageDTO avatarImageDTO = imageService.uploadAvatarImage(request.getPhotoFile());
@@ -74,7 +76,7 @@ public class BandServiceImpl implements BandService {
                 new ArrayList<>(),
                 new ArrayList<>());
         Band savedBand = bandsDao.save(newBand);
-        userService.addBandToUser(userService.getCurrentUser().getId(), newBand);
+        userService.addBandToUser(userService.getCurrentAuthUser().getId(), newBand);
         return bandMapper.toDto(savedBand);
     }
 
@@ -100,7 +102,14 @@ public class BandServiceImpl implements BandService {
     @Override
     public BandDTO changeBandAvatar(Long bandId, AvatarImageDTO dto) {
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
-        band.setBandAvatar(imageMapper.toEntity(dto));
+        User currentAuthUser = userService.getCurrentAuthUser();
+        Long currentUserId = userService.getUserByUsername(currentAuthUser.getUsername()).getId();
+        User bandLeader = band.getLeader();
+        if (Objects.equals(bandLeader.getId(), currentUserId)) {
+            band.setBandAvatar(imageMapper.toEntity(dto));
+        } else {
+            throw new CurrentUserIsNotTheLeaderOfTheBandException();
+        }
         return bandMapper.toDto(bandsDao.save(band));
     }
 

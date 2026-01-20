@@ -48,6 +48,7 @@ public class SimpleSecurityConfig {
 //                                "/auth/oauth2", //удали при мне
                                 "/auth/local/register",
                                 "/auth/telegram",
+                                "/bands/**",
                                 "/login",
                                 "/logout")
                         .permitAll()

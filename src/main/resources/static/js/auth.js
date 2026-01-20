@@ -4,15 +4,16 @@ let allBands = [];
 let bandById = null;
 
 document.addEventListener("DOMContentLoaded", function () {
-    initializeUserData();
     const currentBandId = sessionStorage.getItem("currentBandId");
     if (currentBandId) {
         getBandById(currentBandId);
     }
+    initializeUserData();
 })
 
 async function initializeUserData() {
     await displayCurrentUser();
+    checkCurrentUserLeadershipInCurrentBand();
     await getCurrentUserBands();
     renderCurrentUsersBands();
     await getAllBands();
@@ -257,6 +258,48 @@ async function handleRegisterUser() {
         }
     } catch (error) {
         console.error('Ошибка:', error);
+    }
+}
+
+async function handleChangeAvatar(bandOrUser) {
+    const currentBandId = sessionStorage.getItem("currentBandId");
+    const photoFile = document.getElementById('newBandPhoto');
+
+    const formData = new FormData();
+    let requestUrl;
+    if (photoFile.files.length > 0) {
+        formData.append('photoFile', photoFile.files[0])
+    }
+    try {
+        if (bandOrUser === 'band') {
+            requestUrl = `/bands/` + currentBandId + `/avatar`;
+        }
+        if (bandOrUser === 'user') {
+            requestUrl = `/users/` + currentUser.id + `/avatar`;
+        }
+        const response = await fetch(requestUrl, {
+            method: 'POST',
+            body: formData
+        });
+        if (response.ok) {
+            alert('Фото изменено!');
+            document.getElementById('photo').value = '';
+        } else {
+            alert('Фото не изменено! Проверьте логи');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+    }
+}
+
+function checkCurrentUserLeadershipInCurrentBand() {
+    const currentBandId = sessionStorage.getItem("currentBandId");
+    currentBand = getBandById(currentBandId);
+    const photoFile = document.getElementById('newBandPhoto');
+    const changeBandPhotoButton = document.getElementById('changeBandPhoto');
+    if (currentBand.leader.id !== currentUser.id) {
+        photoFile.hidden;
+        changeBandPhotoButton.hidden
     }
 }
 

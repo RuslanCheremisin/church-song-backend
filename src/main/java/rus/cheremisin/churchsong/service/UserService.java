@@ -1,5 +1,7 @@
 package rus.cheremisin.churchsong.service;
 
+import rus.cheremisin.churchsong.DTO.AvatarImageDTO;
+import rus.cheremisin.churchsong.DTO.BandDTO;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.Band;
@@ -30,5 +32,7 @@ public interface UserService {
 
     UserDTO addOAuth2OrTGUser(UserDTO userDTO);
 
-    User getCurrentUser();
+    User getCurrentAuthUser();
+
+    UserDTO changeUserAvatar(Long userId, AvatarImageDTO dto);
 }

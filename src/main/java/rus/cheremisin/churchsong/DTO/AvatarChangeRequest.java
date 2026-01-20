@@ -1,8 +1,9 @@
 package rus.cheremisin.churchsong.DTO;
 
 import lombok.Getter;
-import rus.cheremisin.churchsong.entity.AvatarImage;
+import org.springframework.web.multipart.MultipartFile;
+
 @Getter
 public class AvatarChangeRequest {
-    private AvatarImage image;
+    private MultipartFile photoFile;
 }
