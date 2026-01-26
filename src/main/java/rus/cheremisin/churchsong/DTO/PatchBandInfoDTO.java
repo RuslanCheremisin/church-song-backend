@@ -10,8 +10,7 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PatchBandDTO {
-    Long id;
+public class PatchBandInfoDTO {
     String name;
     String email;
     String contactPhone;

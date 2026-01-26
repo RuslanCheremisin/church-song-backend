@@ -12,15 +12,15 @@ public interface BandService {
 
     BandDTO createBand(BandCreateRequest request);
 
-    BandDTO patchBand(Long bandId, PatchBandDTO dto);
+    BandDTO patchBand(Long bandId, PatchBandInfoDTO dto);
 
     BandDTO changeBandLeader(Long bandId, LeaderChangeRequest request);
 
     BandDTO changeBandAvatar(Long bandId, AvatarImageDTO dto);
 
-    BandDTO grantMembershipRequest(Long bandId, GrantMembershipRequest request);
+    BandDTO grantMembership(Long bandId, GrantMembershipRequest request);
 
-    BandDTO cancelMembershipRequest(Long bandId, CancelMembershipRequest request);
+    BandDTO cancelMembership(Long bandId, CancelMembershipRequest request);
 
     void deleteBand(Long bandId);
 
@@ -29,4 +29,6 @@ public interface BandService {
     void removeSongFromBand(Long bandId, Song song);
 
     List<SimpleBandDTO> getUserBands(Long userId);
+
+    List<UserDTO> getBandMembers(Long bandId);
 }

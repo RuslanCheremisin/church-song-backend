@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import rus.cheremisin.churchsong.DTO.BandDTO;
-import rus.cheremisin.churchsong.DTO.PatchBandDTO;
+import rus.cheremisin.churchsong.DTO.PatchBandInfoDTO;
 import rus.cheremisin.churchsong.DTO.SimpleBandDTO;
 import rus.cheremisin.churchsong.entity.Band;
 
@@ -26,5 +26,5 @@ public interface BandMapper {
     @Mapping(target = "bandAvatar", ignore = true)
 //    @Mapping(target = "members", ignore = true)
     @Mapping(target = "songs", ignore = true)
-    Band mergeToEntity(PatchBandDTO dto, @MappingTarget Band band);
+    Band mergeToEntity(PatchBandInfoDTO dto, @MappingTarget Band band);
 }

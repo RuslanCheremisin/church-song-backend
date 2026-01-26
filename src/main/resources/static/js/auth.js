@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function initializeUserData() {
     await displayCurrentUser();
-    checkCurrentUserLeadershipInCurrentBand();
+    // checkCurrentUserLeadershipInCurrentBand();
     await getCurrentUserBands();
     renderCurrentUsersBands();
     await getAllBands();

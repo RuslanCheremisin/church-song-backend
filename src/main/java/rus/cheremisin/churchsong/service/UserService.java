@@ -20,6 +20,7 @@ public interface UserService {
     void deleteUser(Long id);
 
     UserDTO getUserByUsername(String username);
+
     UserDTO findById(Long userId);
 
     Band addBandToUser(Long newMemberId, Band band);

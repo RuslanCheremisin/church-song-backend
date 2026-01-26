@@ -3,6 +3,7 @@ package rus.cheremisin.churchsong.controller;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,7 +69,7 @@ public class UserController {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }
-    @PatchMapping("/{user-id}/avatar")
+    @PatchMapping(value = "/{user-id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UserDTO> changeUserAvatar(@PathVariable("user-id") Long userId,
                                                     @RequestParam(value = "photoFile") MultipartFile photoFile) {
         AvatarImageDTO dto = imageService.uploadAvatarImage(photoFile);

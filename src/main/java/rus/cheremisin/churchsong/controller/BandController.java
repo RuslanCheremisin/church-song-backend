@@ -3,13 +3,13 @@ package rus.cheremisin.churchsong.controller;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rus.cheremisin.churchsong.DTO.*;
 import rus.cheremisin.churchsong.service.BandService;
 import rus.cheremisin.churchsong.service.ImageService;
-import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class BandController {
         return ResponseEntity.ok(bandService.getBandById(bandId));
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<BandDTO> createBand(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "email") String email,
@@ -52,8 +52,8 @@ public class BandController {
         return ResponseEntity.ok(bandService.createBand(request));
     }
 
-    @PatchMapping("/{band-id}")
-    public ResponseEntity<BandDTO> patchBand(@PathVariable("band-id") Long bandId, @RequestBody PatchBandDTO dto) {
+    @PutMapping("/{band-id}")
+    public ResponseEntity<BandDTO> patchBand(@PathVariable("band-id") Long bandId, @RequestBody PatchBandInfoDTO dto) {
         return ResponseEntity.ok(bandService.patchBand(bandId, dto));
     }
 
@@ -62,21 +62,25 @@ public class BandController {
         return ResponseEntity.ok(bandService.changeBandLeader(bandId, request));
     }
 
-    @PostMapping("/{band-id}/avatar")
+    @PatchMapping(value = "/{band-id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<BandDTO> changeBandAvatar(@PathVariable("band-id") Long bandId,
                                                     @RequestParam(value = "photoFile") MultipartFile photoFile) {
         AvatarImageDTO dto = imageService.uploadAvatarImage(photoFile);
         return ResponseEntity.ok(bandService.changeBandAvatar(bandId, dto));
     }
 
-    @PostMapping("/{band-id}/members")
+    @GetMapping("/{band-id}/members")
+    public ResponseEntity<List<UserDTO>> getBandMembers(@PathVariable("band-id") Long bandId) {
+        return ResponseEntity.ok(bandService.getBandMembers(bandId));
+    }
+    @PatchMapping("/{band-id}/members")
     public ResponseEntity<BandDTO> grantMembership(@PathVariable("band-id") Long bandId, @RequestBody GrantMembershipRequest request) {
-        return ResponseEntity.ok(bandService.grantMembershipRequest(bandId, request));
+        return ResponseEntity.ok(bandService.grantMembership(bandId, request));
     }
 
     @DeleteMapping("/{band-id}/members")
     public ResponseEntity<BandDTO> cancelMembership(@PathVariable("band-id") Long bandId, @RequestBody CancelMembershipRequest request) {
-        return ResponseEntity.ok(bandService.cancelMembershipRequest(bandId, request));
+        return ResponseEntity.ok(bandService.cancelMembership(bandId, request));
     }
 
     @DeleteMapping("/{band-id}")

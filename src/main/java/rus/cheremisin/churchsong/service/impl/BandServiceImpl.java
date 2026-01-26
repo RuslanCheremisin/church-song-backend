@@ -6,10 +6,6 @@ import jakarta.persistence.PersistenceContext;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.BandDAO;
@@ -28,7 +24,6 @@ import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -81,7 +76,7 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public BandDTO patchBand(Long bandId, PatchBandDTO dto) {
+    public BandDTO patchBand(Long bandId, PatchBandInfoDTO dto) {
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         Band updatedBand = bandMapper.mergeToEntity(dto, band);
         return bandMapper.toDto(bandsDao.save(updatedBand));
@@ -114,7 +109,7 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public BandDTO grantMembershipRequest(Long bandId, GrantMembershipRequest request) {
+    public BandDTO grantMembership(Long bandId, GrantMembershipRequest request) {
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         User newMember = userMapper.toEntity(userService.findById(request.getNewMemberId()));
         band.addMember(newMember);
@@ -122,7 +117,7 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public BandDTO cancelMembershipRequest(Long bandId, CancelMembershipRequest request) {
+    public BandDTO cancelMembership(Long bandId, CancelMembershipRequest request) {
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         User newMember = userMapper.toEntity(userService.findById(request.getMemberId()));
         band.removeMember(newMember);
@@ -154,6 +149,11 @@ public class BandServiceImpl implements BandService {
         UserDTO givenUser = userService.findById(userId);
         List<User> userList = List.of(userMapper.toEntity(givenUser));
         return bandMapper.toDtoList(bandsDao.findAllByMembersContaining(userList));
+    }
+
+    @Override
+    public List<UserDTO> getBandMembers(Long bandId) {
+        return userMapper.toDtoList(bandsDao.findById(bandId).orElseThrow().getMembers());
     }
 
 
