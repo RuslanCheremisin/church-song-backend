@@ -1,0 +1,35 @@
+#services:
+#  postgres:
+#    image: postgres:15-alpine
+#    container_name: churchsong-postgres
+#    environment:
+#      POSTGRES_DB: church-song
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: 123
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -U postgres -d church-song"]
+#      interval: 5s
+#      timeout: 5s
+#      retries: 5
+#  app:
+#    image: tomcat:10-jdk17
+#    container_name: churchsong-app
+#    ports:
+#      - "8081:8081"
+#    volumes:
+#      - ./ChurchSong-0.0.1-SNAPSHOT.war:/Users/rus/Desktop/Java/ChurchSong/ChurchSong/target/ChurchSong-0.0.1-SNAPSHOT.war
+#
+#    environment:
+#      - DATABASE_URL=jdbc:postgresql://postgres:5432/church-song
+#      - DATABASE_USER=postgres
+#      - DATABASE_PASSWORD=123
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#
+#volumes:
+#  postgres_data:

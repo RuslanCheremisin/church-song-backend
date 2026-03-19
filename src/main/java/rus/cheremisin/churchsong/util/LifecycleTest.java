@@ -13,12 +13,12 @@ public class LifecycleTest {
         return new LifecycleTest();
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void postConstruct() {
         System.out.println("this is post-construct");
     }
 
-    @PreDestroy
+//    @PreDestroy
     public void preDestroy() {
         System.out.println("this is pre-destroy");
     }

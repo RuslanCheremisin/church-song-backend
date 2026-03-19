@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.BandDAO;
 import rus.cheremisin.churchsong.DTO.*;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@Transactional
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BandServiceImpl implements BandService {

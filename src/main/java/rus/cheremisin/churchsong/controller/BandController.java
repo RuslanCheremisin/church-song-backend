@@ -62,7 +62,7 @@ public class BandController {
         return ResponseEntity.ok(bandService.changeBandLeader(bandId, request));
     }
 
-    @PatchMapping(value = "/{band-id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/{band-id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<BandDTO> changeBandAvatar(@PathVariable("band-id") Long bandId,
                                                     @RequestParam(value = "photoFile") MultipartFile photoFile) {
         AvatarImageDTO dto = imageService.uploadAvatarImage(photoFile);

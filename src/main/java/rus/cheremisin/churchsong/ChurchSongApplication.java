@@ -10,9 +10,6 @@ public class ChurchSongApplication {
 
         SpringApplication.run(ChurchSongApplication.class, args);
 
-//        SpringContextHolder context = new SpringContextHolder();
-//        LifecycleTest test = context.getContext().getBean(LifecycleTest.class);
-//        test.working();
     }
 
 }
