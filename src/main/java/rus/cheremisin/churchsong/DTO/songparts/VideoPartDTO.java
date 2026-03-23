@@ -3,6 +3,8 @@ package rus.cheremisin.churchsong.DTO.songparts;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.io.File;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -12,5 +14,5 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class VideoPartDTO {
     Long id;
-    String link;
+    File file;
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.io.File;
+
 @Entity
 @Table(name = "video_parts")
 @AllArgsConstructor
@@ -17,7 +19,6 @@ public class VideoPart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-//    Byte[] videoData;
-    String link;
+    File file;
 
 }

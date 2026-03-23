@@ -21,7 +21,7 @@ public class SongPartController {
     }
     
     @PostMapping
-    public ResponseEntity<FullSongPartDTO> createSongPart(FullSongPartDTO song, @PathVariable("song-id") Long songId) {
+    public ResponseEntity<FullSongPartDTO> createSongPart(FullSongPartDTO songPart, @PathVariable("song-id") Long songId) {
         return ResponseEntity.ok().build();
     }
     
