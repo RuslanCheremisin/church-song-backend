@@ -11,15 +11,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SecurityConfig {
     private final CustomSuccessHandler customSuccessHandler;
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final CorsConfig corsConfig;
 
-    @Autowired
+//    @Autowired
     public SecurityConfig(CustomSuccessHandler customSuccessHandler, UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, CorsConfig corsConfig) {
         this.customSuccessHandler = customSuccessHandler;
         this.userDetailsService = userDetailsService;
@@ -27,7 +27,7 @@ public class SecurityConfig {
         this.corsConfig = corsConfig;
     }
 
-    @Bean
+//    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf ->
