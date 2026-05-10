@@ -1,10 +1,6 @@
 package rus.cheremisin.churchsong.DTO;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
 
-@Getter
-//@Setter
-public class GrantMembershipRequest {
-    private Long newMemberId;
+public record GrantMembershipRequest(@NotNull Long newMemberId) {
 }

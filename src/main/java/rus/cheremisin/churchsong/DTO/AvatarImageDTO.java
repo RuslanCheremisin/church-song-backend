@@ -1,16 +1,13 @@
 package rus.cheremisin.churchsong.DTO;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class AvatarImageDTO {
-    Long id;
-    String link;
+public record AvatarImageDTO(
+        @NotNull
+        Long id,
+        @NotNull
+        @NotBlank
+        String link
+) {
 }

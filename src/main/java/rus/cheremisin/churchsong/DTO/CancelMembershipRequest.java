@@ -1,8 +1,7 @@
 package rus.cheremisin.churchsong.DTO;
 
-import lombok.Getter;
+import jakarta.validation.constraints.NotNull;
 
-@Getter
-public class CancelMembershipRequest {
-    private Long memberId;
+public record CancelMembershipRequest(@NotNull Long memberId) {
+
 }

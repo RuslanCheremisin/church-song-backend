@@ -12,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 public class NoSecurityConfig {
 
     @Bean
-    @Primary
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // Отключаем CSRF
@@ -21,4 +20,5 @@ public class NoSecurityConfig {
                 );
         return http.build();
     }
+
 }

@@ -1,8 +1,13 @@
 package rus.cheremisin.churchsong.DTO;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
-import rus.cheremisin.churchsong.entity.OriginalRecording;
 import rus.cheremisin.churchsong.entity.songparts.SongPart;
 
 import java.util.List;
@@ -19,7 +24,7 @@ public class FullSongDTO {
     String name;
     Integer bpm;
     String songKey;
-    OriginalRecording origRec;
+    OriginalRecordingDTO origRec;
     List<SongPart> songParts;
     BandDTO band;
 }

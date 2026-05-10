@@ -1,13 +1,32 @@
 package rus.cheremisin.churchsong.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import rus.cheremisin.churchsong.DTO.*;
+import rus.cheremisin.churchsong.DTO.AvatarImageDTO;
+import rus.cheremisin.churchsong.DTO.CreateBandRequest;
+import rus.cheremisin.churchsong.DTO.BandDTO;
+import rus.cheremisin.churchsong.DTO.CancelMembershipRequest;
+import rus.cheremisin.churchsong.DTO.GrantMembershipRequest;
+import rus.cheremisin.churchsong.DTO.LeaderChangeRequest;
+import rus.cheremisin.churchsong.DTO.PatchBandInfoDTO;
+import rus.cheremisin.churchsong.DTO.SimpleBandDTO;
+import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.service.BandService;
 import rus.cheremisin.churchsong.service.ImageService;
 
@@ -25,9 +44,10 @@ public class BandController {
     public ResponseEntity<List<SimpleBandDTO>> getAllBands() {
         return ResponseEntity.ok(bandService.getAllBands());
     }
+
     @GetMapping("/by-user/{user-id}")
-    public ResponseEntity<List<SimpleBandDTO>> getUserBands(@PathVariable("user-id") Long userId) {
-        return ResponseEntity.ok(bandService.getUserBands(userId));
+    public ResponseEntity<List<SimpleBandDTO>> getBandsByUserId(@PathVariable("user-id") Long userId) {
+        return ResponseEntity.ok(bandService.getBandsByUserId(userId));
     }
 
     @GetMapping("/{band-id}")
@@ -36,34 +56,22 @@ public class BandController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<BandDTO> createBand(
-            @RequestParam(value = "name") String name,
-            @RequestParam(value = "email") String email,
-            @RequestParam(value = "contactPhone", required = false) String contactPhone,
-            @RequestParam(value = "bio", required = false) String bio,
-            @RequestParam(value = "photoFile", required = false) MultipartFile photoFile) {
-
-        BandCreateRequest request = new BandCreateRequest();
-        request.setName(name);
-        request.setEmail(email);
-        request.setContactPhone(contactPhone);
-        request.setBio(bio);
-        request.setPhotoFile(photoFile);
+    public ResponseEntity<BandDTO> createBand(@Valid @RequestBody CreateBandRequest request) {
         return ResponseEntity.ok(bandService.createBand(request));
     }
 
     @PutMapping("/{band-id}")
-    public ResponseEntity<BandDTO> patchBand(@PathVariable("band-id") Long bandId, @RequestBody PatchBandInfoDTO dto) {
+    public ResponseEntity<BandDTO> patchBand(@PathVariable("band-id") Long bandId, @Valid @RequestBody PatchBandInfoDTO dto) {
         return ResponseEntity.ok(bandService.patchBand(bandId, dto));
     }
 
     @PatchMapping("/{band-id}/leader")
-    public ResponseEntity<BandDTO> changeBandLeader(@PathVariable("band-id") Long bandId, @RequestBody LeaderChangeRequest request) {
+    public ResponseEntity<BandDTO> changeBandLeader(@PathVariable("band-id") Long bandId, @Valid @RequestBody LeaderChangeRequest request) {
         return ResponseEntity.ok(bandService.changeBandLeader(bandId, request));
     }
 
     @PostMapping(value = "/{band-id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<BandDTO> changeBandAvatar(@PathVariable("band-id") Long bandId,
+    public ResponseEntity<BandDTO> changeBandAvatar(@NotNull @PathVariable("band-id") Long bandId,
                                                     @RequestParam(value = "photoFile") MultipartFile photoFile) {
         AvatarImageDTO dto = imageService.uploadAvatarImage(photoFile);
         return ResponseEntity.ok(bandService.changeBandAvatar(bandId, dto));
@@ -73,13 +81,14 @@ public class BandController {
     public ResponseEntity<List<UserDTO>> getBandMembers(@PathVariable("band-id") Long bandId) {
         return ResponseEntity.ok(bandService.getBandMembers(bandId));
     }
+
     @PatchMapping("/{band-id}/members")
-    public ResponseEntity<BandDTO> grantMembership(@PathVariable("band-id") Long bandId, @RequestBody GrantMembershipRequest request) {
+    public ResponseEntity<BandDTO> grantMembership(@PathVariable("band-id") Long bandId, @Valid @RequestBody GrantMembershipRequest request) {
         return ResponseEntity.ok(bandService.grantMembership(bandId, request));
     }
 
     @DeleteMapping("/{band-id}/members")
-    public ResponseEntity<BandDTO> cancelMembership(@PathVariable("band-id") Long bandId, @RequestBody CancelMembershipRequest request) {
+    public ResponseEntity<BandDTO> cancelMembership(@PathVariable("band-id") Long bandId, @Valid @RequestBody CancelMembershipRequest request) {
         return ResponseEntity.ok(bandService.cancelMembership(bandId, request));
     }
 

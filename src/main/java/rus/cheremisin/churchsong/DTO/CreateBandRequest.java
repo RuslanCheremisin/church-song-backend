@@ -1,27 +1,15 @@
 package rus.cheremisin.churchsong.DTO;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import rus.cheremisin.churchsong.entity.AvatarImage;
 
-import java.util.List;
-
-public record BandDTO(
-
-        @NotNull(message = "Id cannot be null")
-        Long id,
+public record CreateBandRequest(
 
         @NotBlank(message = "Band name cannot be blank")
         @Size(min = 2, max = 100, message = "Band name must be between 2 and 100 characters")
         String name,
-
-        @NotNull(message = "Leader cannot be null")
-        @Valid
-        UserMemberDTO leader,
 
         @NotBlank(message = "Email cannot be blank")
         @Email(message = "Invalid email format")
@@ -34,16 +22,7 @@ public record BandDTO(
         )
         String contactPhone,
 
-        AvatarImage bandAvatar,
-
         @Size(max = 1000, message = "Bio cannot exceed 1000 characters")
-        String bio,
-
-        @Valid
-        List<UserMemberDTO> members,
-
-        @Valid
-        List<SimpleSongDTO> songs
-
+        String bio
 ) {
 }

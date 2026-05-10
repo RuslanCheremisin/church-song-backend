@@ -10,7 +10,7 @@ public interface BandService {
 
     BandDTO getBandById(Long bandId);
 
-    BandDTO createBand(BandCreateRequest request);
+    BandDTO createBand(CreateBandRequest request);
 
     BandDTO patchBand(Long bandId, PatchBandInfoDTO dto);
 
@@ -28,7 +28,7 @@ public interface BandService {
 
     void removeSongFromBand(Long bandId, Song song);
 
-    List<SimpleBandDTO> getUserBands(Long userId);
+    List<SimpleBandDTO> getBandsByUserId(Long userId);
 
     List<UserDTO> getBandMembers(Long bandId);
 }

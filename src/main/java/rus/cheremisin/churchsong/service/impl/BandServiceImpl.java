@@ -55,20 +55,18 @@ public class BandServiceImpl implements BandService {
 
     @Override
     @Transactional
-    public BandDTO createBand(BandCreateRequest request) {
+    public BandDTO createBand(CreateBandRequest request) {
         User creatorUser = userService.getCurrentAuthUser();
         User managedUser = entityManager.merge(creatorUser);
 
-        AvatarImageDTO avatarImageDTO = imageService.uploadAvatarImage(request.getPhotoFile());
-        AvatarImage avatarImage = entityManager.getReference(AvatarImage.class, avatarImageDTO.getId());
         Band newBand = new Band(
                 null,
-                request.getName(),
+                request.name(),
                 managedUser,
-                request.getEmail(),
-                request.getContactPhone(),
-                avatarImage,
-                request.getBio(),
+                request.email(),
+                request.contactPhone(),
+                null,
+                request.bio(),
                 new ArrayList<>(),
                 new ArrayList<>());
         Band savedBand = bandsDao.save(newBand);
@@ -112,7 +110,7 @@ public class BandServiceImpl implements BandService {
     @Override
     public BandDTO grantMembership(Long bandId, GrantMembershipRequest request) {
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
-        User newMember = userMapper.toEntity(userService.findById(request.getNewMemberId()));
+        User newMember = userMapper.toEntity(userService.findById(request.newMemberId()));
         band.addMember(newMember);
         return bandMapper.toDto(userService.addBandToUser(newMember.getId(), band));
     }
@@ -120,7 +118,7 @@ public class BandServiceImpl implements BandService {
     @Override
     public BandDTO cancelMembership(Long bandId, CancelMembershipRequest request) {
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
-        User newMember = userMapper.toEntity(userService.findById(request.getMemberId()));
+        User newMember = userMapper.toEntity(userService.findById(request.memberId()));
         band.removeMember(newMember);
         return bandMapper.toDto(bandsDao.save(band));
     }
@@ -146,7 +144,7 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public List<SimpleBandDTO> getUserBands(Long userId) {
+    public List<SimpleBandDTO> getBandsByUserId(Long userId) {
         UserDTO givenUser = userService.findById(userId);
         List<User> userList = List.of(userMapper.toEntity(givenUser));
         return bandMapper.toDtoList(bandsDao.findAllByMembersContaining(userList));

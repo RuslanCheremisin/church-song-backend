@@ -4,9 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import rus.cheremisin.churchsong.util.LifecycleTest;
 
-@Configuration
+//@Configuration
 public class LifecycleTestConfig {
-    @Bean
+//    @Bean
     public LifecycleTest lifecycleTest() {
         return LifecycleTest.getLifecycleTest();
     }
