@@ -6,6 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,17 +39,20 @@ public class BandServiceImpl implements BandService {
     UserMapper userMapper;
     @PersistenceContext
     EntityManager entityManager;
-    ImageService imageService;
     AvatarImageMapper imageMapper;
 
     @Override
-    @Transactional(readOnly = true)
-    public List<SimpleBandDTO> getAllBands() {
-        return bandMapper.toDtoList(bandsDao.findAll());
+    @Transactional
+    public List<SimpleBandDTO> getAllBands(Pageable pageable) {
+        if (pageable == null) {
+            throw new NullPointerException("pageable is null!");
+        }
+
+        return bandMapper.toDtoList(bandsDao.findAll(pageable).toList());
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public BandDTO getBandById(Long bandId) {
         return bandMapper.toDto(bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id")));
     }
@@ -108,7 +112,7 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public BandDTO grantMembership(Long bandId, GrantMembershipRequest request) {
+    public BandDTO grantBandMembership(Long bandId, GrantMembershipRequest request) {
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         User newMember = userMapper.toEntity(userService.findById(request.newMemberId()));
         band.addMember(newMember);
@@ -116,7 +120,7 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public BandDTO cancelMembership(Long bandId, CancelMembershipRequest request) {
+    public BandDTO cancelBandMembership(Long bandId, CancelMembershipRequest request) {
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
         User newMember = userMapper.toEntity(userService.findById(request.memberId()));
         band.removeMember(newMember);

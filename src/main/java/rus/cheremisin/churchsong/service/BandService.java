@@ -1,12 +1,13 @@
 package rus.cheremisin.churchsong.service;
 
+import org.springframework.data.domain.Pageable;
 import rus.cheremisin.churchsong.DTO.*;
 import rus.cheremisin.churchsong.entity.Song;
 
 import java.util.List;
 
 public interface BandService {
-    List<SimpleBandDTO> getAllBands();
+    List<SimpleBandDTO> getAllBands(Pageable pageable);
 
     BandDTO getBandById(Long bandId);
 
@@ -18,9 +19,9 @@ public interface BandService {
 
     BandDTO changeBandAvatar(Long bandId, AvatarImageDTO dto);
 
-    BandDTO grantMembership(Long bandId, GrantMembershipRequest request);
+    BandDTO grantBandMembership(Long bandId, GrantMembershipRequest request);
 
-    BandDTO cancelMembership(Long bandId, CancelMembershipRequest request);
+    BandDTO cancelBandMembership(Long bandId, CancelMembershipRequest request);
 
     void deleteBand(Long bandId);
 

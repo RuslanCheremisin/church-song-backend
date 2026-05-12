@@ -7,22 +7,22 @@ import jakarta.validation.constraints.Size;
 
 public record CreateBandRequest(
 
-        @NotBlank(message = "Band name cannot be blank")
-        @Size(min = 2, max = 100, message = "Band name must be between 2 and 100 characters")
+        @NotBlank(message = "Название группы не может быть пустым")
+        @Size(min = 2, max = 100, message = "Название группы должно содержать от 2 до 100 символов")
         String name,
 
-        @NotBlank(message = "Email cannot be blank")
-        @Email(message = "Invalid email format")
+        @NotBlank(message = "Email не может быть пустым")
+        @Email(message = "Неверный формат email")
         String email,
 
-        @NotBlank(message = "Contact phone cannot be blank")
+        @NotBlank(message = "Номер телефона не может быть пустым")
         @Pattern(
                 regexp = "^\\+?[0-9\\-() ]{7,20}$",
-                message = "Invalid phone number format"
+                message = "Неверный формат номера телефона"
         )
         String contactPhone,
 
-        @Size(max = 1000, message = "Bio cannot exceed 1000 characters")
+        @Size(max = 1000, message = "Био не должно превышать 1000 символов")
         String bio
 ) {
 }
