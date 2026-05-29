@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.UserDAO;
 import rus.cheremisin.churchsong.DTO.AvatarImageDTO;
-import rus.cheremisin.churchsong.DTO.BandDTO;
 import rus.cheremisin.churchsong.DTO.UserCreateRequest;
 import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.AvatarImage;
@@ -88,7 +87,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDTO addUser(UserCreateRequest request) {
         AvatarImageDTO avatarImageDTO = imageService.uploadAvatarImage(request.getPhotoFile());
-        AvatarImage avatarImage = entityManager.getReference(AvatarImage.class, avatarImageDTO.getId());
+        AvatarImage avatarImage = entityManager.getReference(AvatarImage.class, avatarImageDTO.id());
 
         User user = new User(
                 null,

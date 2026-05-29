@@ -44,18 +44,6 @@ public class BandController {
     BandService bandService;
     ImageService imageService;
 
-//    @GetMapping
-//    public ResponseEntity<List<BookDto>> getAllBooks(
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size,
-//            @RequestParam(defaultValue = "id") String sortBy,
-//            @RequestParam(defaultValue = "true") boolean ascending) {
-//        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
-//        Pageable pageable = PageRequest.of(page, size, sort);
-//        List<BookDto> books = bookService.getAllBooks(pageable);
-//        return ResponseEntity.ok(books);
-//    }
-
     @GetMapping
     public ResponseEntity<List<SimpleBandDTO>> getAllBands(
             @RequestParam(defaultValue = "0") int page,
