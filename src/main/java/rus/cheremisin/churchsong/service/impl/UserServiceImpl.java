@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = dao.findById(newMemberId).orElseThrow(() -> new EntityNotFoundException("no user with such id"));
         user.addBand(band);
         band.addMember(user);
-        dao.save(user);
+//        dao.save(user);
         return band;
     }
 

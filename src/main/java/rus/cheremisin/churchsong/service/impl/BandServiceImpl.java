@@ -11,8 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.churchsong.DAO.BandDAO;
-import rus.cheremisin.churchsong.DTO.*;
-import rus.cheremisin.churchsong.entity.AvatarImage;
+import rus.cheremisin.churchsong.DTO.AvatarImageDTO;
+import rus.cheremisin.churchsong.DTO.BandDTO;
+import rus.cheremisin.churchsong.DTO.CancelMembershipRequest;
+import rus.cheremisin.churchsong.DTO.CreateBandRequest;
+import rus.cheremisin.churchsong.DTO.GrantMembershipRequest;
+import rus.cheremisin.churchsong.DTO.LeaderChangeRequest;
+import rus.cheremisin.churchsong.DTO.PatchBandInfoDTO;
+import rus.cheremisin.churchsong.DTO.SimpleBandDTO;
+import rus.cheremisin.churchsong.DTO.UserDTO;
 import rus.cheremisin.churchsong.entity.Band;
 import rus.cheremisin.churchsong.entity.Song;
 import rus.cheremisin.churchsong.entity.User;
@@ -21,7 +28,6 @@ import rus.cheremisin.churchsong.mapper.AvatarImageMapper;
 import rus.cheremisin.churchsong.mapper.BandMapper;
 import rus.cheremisin.churchsong.mapper.UserMapper;
 import rus.cheremisin.churchsong.service.BandService;
-import rus.cheremisin.churchsong.service.ImageService;
 import rus.cheremisin.churchsong.service.UserService;
 
 import java.util.ArrayList;
@@ -73,16 +79,21 @@ public class BandServiceImpl implements BandService {
                 request.bio(),
                 new ArrayList<>(),
                 new ArrayList<>());
+        userService.addBandToUser(creatorUser.getId(), newBand);
         Band savedBand = bandsDao.save(newBand);
-        userService.addBandToUser(userService.getCurrentAuthUser().getId(), newBand);
         return bandMapper.toDto(savedBand);
     }
 
     @Override
     public BandDTO patchBand(Long bandId, PatchBandInfoDTO dto) {
+        User currentUser = userService.getCurrentAuthUser();
         Band band = bandsDao.findById(bandId).orElseThrow(() -> new EntityNotFoundException("no band with such id"));
-        Band updatedBand = bandMapper.mergeToEntity(dto, band);
-        return bandMapper.toDto(bandsDao.save(updatedBand));
+        if (band.getLeader().getId().equals(currentUser.getId())) {
+            Band updatedBand = bandMapper.mergeToEntity(dto, band);
+            return bandMapper.toDto(bandsDao.save(updatedBand));
+        } else {
+            throw new CurrentUserIsNotTheLeaderOfTheBandException();
+        }
     }
 
     @Override
