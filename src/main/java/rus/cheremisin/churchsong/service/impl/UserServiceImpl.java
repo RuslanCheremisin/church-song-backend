@@ -6,6 +6,7 @@ import jakarta.persistence.PersistenceContext;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     AvatarImageMapper imageMapper;
 
     @Override
+    @Cacheable(value = "users", key = "#id")
     public UserDTO findById(Long id) {
         return mapper.toDto(dao.findById(id).orElseThrow(() -> new EntityNotFoundException("no user with such id")));
     }

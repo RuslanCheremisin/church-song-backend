@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import rus.cheremisin.churchsong.entity.AvatarImage;
 import rus.cheremisin.churchsong.entity.Role;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ import java.util.Set;
 @EqualsAndHashCode
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDTO {
+public class UserDTO implements Serializable {
     Long id;
     String firstName;
     String lastName;
